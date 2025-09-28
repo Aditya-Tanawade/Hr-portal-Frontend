@@ -1,0 +1,156 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jobie - Team Lead Dashboard</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <!-- <nav class="tab-navigation">
+    <button class="tab-btn active" onclick="showTab('overview')">Overview</button>
+    <button class="tab-btn" routerLink="/teamLeadDashboard/projects">Projects</button>
+    <button class="tab-btn" routerLink="/teamLeadDashboard/job-requests">Job Requests</button>
+    <button class="tab-btn" routerLink="/teamLeadDashboard/team-members">Team Members</button>
+  </nav> -->
+
+  <!-- Content Area -->
+  <div class="content-area">
+    <!-- Overview Tab -->
+    <div id="overviewTab" class="tab-content active">
+      <!-- Stats Grid -->
+      <div class="stats-grid fade-in">
+        <div class="stat-card projects">
+          <div class="stat-header">
+            <div class="stat-title">Active Projects</div>
+            <div class="stat-icon">
+              <i class="fas fa-project-diagram"></i>
+            </div>
+          </div>
+          <div class="stat-value">2</div>
+          <div class="stat-change positive">
+            <i class="fas fa-arrow-up"></i> 1 new this month
+          </div>
+        </div>
+
+        <div class="stat-card requests">
+          <div class="stat-header">
+            <div class="stat-title">Pending Requests</div>
+            <div class="stat-icon">
+              <i class="fas fa-clipboard-list"></i>
+            </div>
+          </div>
+          <div class="stat-value">3</div>
+          <div class="stat-change negative">
+            <i class="fas fa-arrow-down"></i> 1 delayed
+          </div>
+        </div>
+
+        <div class="stat-card interviews">
+          <div class="stat-header">
+            <div class="stat-title">Interviews Today</div>
+            <div class="stat-icon">
+              <i class="fas fa-user-tie"></i>
+            </div>
+          </div>
+          <div class="stat-value">2</div>
+          <div class="stat-change positive"><i class="fas fa-arrow-up"></i> +1 from yesterday</div>
+        </div>
+
+        <div class="stat-card team-members">
+          <div class="stat-header">
+            <div class="stat-title">Team Members</div>
+            <div class="stat-icon">
+              <i class="fas fa-users"></i>
+            </div>
+          </div>
+          <div class="stat-value">8</div>
+          <div class="stat-change positive"><i class="fas fa-arrow-up"></i> 2 new</div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <section class="slide-up" style="margin-top: 40px;">
+        <div class="section-title">
+          <span>Recent Activity</span>
+          <a href="#" class="view-all-btn" onclick="showTab('job-requests')">View All</a>
+        </div>
+
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Interview Scheduled</div>
+                <div class="card-subtitle">React Developer Position</div>
+              </div>
+              <span class="status-badge status-interview">Today 2:00 PM</span>
+            </div>
+            <div class="card-content">
+              <div class="candidate-profile">
+                <div class="candidate-avatar">JS</div>
+                <div class="candidate-info">
+                  <h4>John Smith</h4>
+                  <p>4 years experience • Round 1 Interview</p>
+                </div>
+              </div>
+              <div class="skills-tags">
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">Node.js</span>
+                <span class="skill-tag">MongoDB</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-success btn-sm" onclick="conductInterview('CAND001')">
+                <i class="fas fa-video"></i> Start Interview
+              </button>
+              <button class="btn btn-outline btn-sm">
+                <i class="fas fa-eye"></i> View Profile
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Job Request Approved</div>
+                <div class="card-subtitle">Frontend Developer - JR001</div>
+              </div>
+              <span class="status-badge status-approved">Approved</span>
+            </div>
+            <div class="card-content">
+              <div class="info-row">
+                <span class="info-label">Approved By:</span>
+                <span class="info-value">Alex Johnson (PM)</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Budget Allocated:</span>
+                <span class="info-value">$25,000</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Status:</span>
+                <span class="info-value">Posted on Job Portal</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm">
+                <i class="fas fa-eye"></i> View Applications
+              </button>
+              <button class="btn btn-outline btn-sm">
+                <i class="fas fa-edit"></i> Edit Request
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <section class="content-area">
+    <router-outlet></router-outlet>
+  </section>
+</body>

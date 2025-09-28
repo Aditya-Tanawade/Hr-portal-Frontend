@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Applications</title>
+
+    <!-- FontAwesome CDN for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+   
+</head>
+<body>
+    <div class="applications-container">
+        <!-- Header Section -->
+        <section class="applications-header">
+            <div class="header-content">
+                <h1 class="page-title">My Applications</h1>
+                <p class="page-subtitle">Track the progress of your job applications with ease.</p>
+                <div class="applications-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">TOTAL APPLIED</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">ACTIVE</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Interviews Scheduled</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Offers Received</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters Section -->
+        <section class="filters-section">
+            <div class="filters-row">
+                <div class="search-filter">
+                    <input
+                        type="text"
+                        class="search-input"
+                        placeholder="Search by job title, company..."
+                        aria-label="Search applications"
+                    />
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+
+                <div class="filter-controls">
+                    <select class="filter-dropdown" aria-label="Filter by application status">
+                        <option value="" selected>All statuses</option>
+                        <option value="applied">Applied</option>
+                        <option value="interview">Interview</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="withdrawn">Withdrawn</option>
+                    </select>
+
+                    <select class="sort-dropdown" aria-label="Sort applications">
+                        <option value="date-desc" selected>Newest</option>
+                        <option value="date-asc">Oldest</option>
+                        <option value="title-asc">Job Title A-Z</option>
+                        <option value="title-desc">Job Title Z-A</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Applications Grid -->
+        <section class="applications-content">
+            <div class="applications-grid" id="applicationsGrid">
+                <!-- Example Application Cards -->
+                <div class="application-card status-applied">
+                    <div class="application-header">
+                        <div class="job-details">
+                            <h3>Frontend Developer</h3>
+                            <div class="company-info">
+                                <span class="company-name">Awesome Co</span>
+                                <span class="company-location">New York, NY</span>
+                            </div>
+                            <div class="salary-range">$70,000 - $90,000</div>
+                        </div>
+                        <div class="status-section">
+                            <span class="status-badge applied">Applied</span>
+                            <div class="application-date">Applied on Sep 20, 2025</div>
+                        </div>
+                    </div>
+                    <div class="application-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Job Type:</div>
+                            <div class="detail-value">Full-time</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Recruiter:</div>
+                            <div class="detail-value">John Doe</div>
+                        </div>
+                    </div>
+                    <div class="application-actions">
+                        <div class="timeline-info">Status updated 3 days ago</div>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary">View Details</button>
+                            <button class="btn btn-outline">Withdraw</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="application-card status-interview">
+                    <div class="application-header">
+                        <div class="job-details">
+                            <h3>Backend Engineer</h3>
+                            <div class="company-info">
+                                <span class="company-name">Tech Solutions</span>
+                                <span class="company-location">San Francisco, CA</span>
+                            </div>
+                            <div class="salary-range">$85,000 - $110,000</div>
+                        </div>
+                        <div class="status-section">
+                            <span class="status-badge interview">Interview</span>
+                            <div class="application-date">Interview on Oct 2, 2025</div>
+                        </div>
+                    </div>
+                    <div class="application-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Job Type:</div>
+                            <div class="detail-value">Full-time</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Recruiter:</div>
+                            <div class="detail-value">Jane Smith</div>
+                        </div>
+                    </div>
+                    <div class="application-actions">
+                        <div class="timeline-info">Interview scheduled in 4 days</div>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary">View Details</button>
+                            <button class="btn btn-outline">Reschedule</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                 <!-- Applications Content -->
+        <!-- <section class="applications-content">
+            <div class="applications-grid" id="applicationsGrid">
+                <div class="loading-state" id="loadingState">
+                    <div class="spinner"></div>
+                </div>
+            </div> -->
+
+           
+        <!-- </section> -->
+
+                <!-- Add more application cards here -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Example navigateToJobs function if you need it
+        function navigateToJobs() {
+            window.location.href = '/candidateDashboard/find-jobs';
+        }
+    </script>
+</body>
+</html>

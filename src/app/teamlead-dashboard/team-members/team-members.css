@@ -1,0 +1,148 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fa;
+    color: #333;
+}
+
+/* Page Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.page-title {
+    font-size: 1.8em;
+    color: #333;
+}
+
+.page-subtitle {
+    font-size: 1.1em;
+    color: #666;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Cards Grid */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Team Member Card */
+.team-member-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.team-member-card:hover {
+    transform: translateY(-5px);
+}
+
+.member-avatar {
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1.5em;
+    text-align: center;
+    padding: 20px;
+    font-weight: bold;
+}
+
+.member-info {
+    padding: 20px;
+}
+
+.member-name {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.member-role {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.member-status {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.member-status i {
+    margin-right: 8px;
+}
+
+.status-online {
+    color: #28a745;
+}
+
+.status-busy {
+    color: #ff5733;
+}
+
+.additional-info .info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.info-label {
+    font-weight: bold;
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.btn-outline {
+    border: 1px solid #007bff;
+    background-color: #fff;
+    color: #007bff;
+}
+
+.btn-outline:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-sm {
+    padding: 8px 12px;
+    font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+}

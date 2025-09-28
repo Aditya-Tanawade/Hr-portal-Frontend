@@ -1,0 +1,199 @@
+<body>
+    <div class="profile-container">
+        <!-- Header Section -->
+        <header class="profile-header">
+            <div class="header-content">
+                <div class="profile-info">
+                    <div class="profile-avatar-container">
+                        <img src="https://i.pravatar.cc/120?img=68" alt="Profile Avatar" class="profile-avatar" id="profileAvatar">
+                        <button class="avatar-upload-btn" onclick="triggerAvatarUpload()">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                        <input type="file" id="avatarInput" accept="image/*" style="display: none;" onchange="handleAvatarUpload(event)">
+                    </div>
+                    <div class="profile-basic">
+                        <h1 id="displayName">John Doe</h1>
+                        <p id="displayRole">Senior Frontend Developer</p>
+                        <p id="displayEmail">john.doe@email.com</p>
+                    </div>
+                </div>
+                <div class="completion-info">
+                    <div class="completion-percentage" id="completionPercentage">85%</div>
+                    <div class="completion-label">Profile Complete</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 85%;"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Form Content -->
+        <form class="form-content" id="profileForm" onsubmit="handleFormSubmit(event)">
+            <!-- Personal Information Section -->
+            <section class="form-section fade-in">
+                <h2 class="section-title">
+                    <i class="fas fa-user"></i>
+                    Personal Information
+                </h2>
+                <p class="section-subtitle">Update your personal details and contact information</p>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="fullName">
+                            Full Name <span class="required">*</span>
+                        </label>
+                        <input type="text" id="fullName" name="fullName" class="form-input" 
+                               value="John Doe" required>
+                        <div class="error-message" id="fullNameError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">
+                            Email Address <span class="required">*</span>
+                        </label>
+                        <input type="email" id="email" name="email" class="form-input" 
+                               value="john.doe@email.com" required>
+                        <div class="error-message" id="emailError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="phoneNumber">
+                            Phone Number <span class="required">*</span>
+                        </label>
+                        <input type="tel" id="phoneNumber" name="phoneNumber" class="form-input" 
+                               value="+91 98765 43210" required>
+                        <div class="error-message" id="phoneNumberError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="gender">
+                            Gender
+                        </label>
+                        <select id="gender" name="gender" class="form-select">
+                            <option value="">Select Gender</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="OTHER">Other</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Professional Information Section -->
+            <section class="form-section slide-up">
+                <h2 class="section-title">
+                    <i class="fas fa-briefcase"></i>
+                    Professional Information
+                </h2>
+                <p class="section-subtitle">Tell us about your professional background and experience</p>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="currentCompany">
+                            Current Company
+                        </label>
+                        <input type="text" id="currentCompany" name="currentCompany" class="form-input" 
+                               placeholder="e.g., Google, Microsoft">
+                        <div class="help-text">Enter your current or most recent company name</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="totalExperience">
+                            Total Experience (Years)
+                        </label>
+                        <input type="number" id="totalExperience" name="totalExperience" class="form-input" 
+                               min="0" max="50" step="0.5" placeholder="e.g., 3.5">
+                        <div class="help-text">Include all relevant work experience</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="expectedCTC">
+                            Expected CTC (LPA) <span class="required">*</span>
+                        </label>
+                        <input type="number" id="expectedCTC" name="expectedCTC" class="form-input" 
+                               min="0" max="10000" step="0.1" placeholder="e.g., 15.5" required>
+                        <div class="help-text">Enter your expected salary in Lakhs Per Annum</div>
+                        <div class="error-message" id="expectedCTCError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="noticePeriod">
+                            Notice Period (Days)
+                        </label>
+                        <select id="noticePeriod" name="noticePeriod" class="form-select">
+                            <option value="">Select Notice Period</option>
+                            <option value="0">Immediate (0 days)</option>
+                            <option value="15">15 days</option>
+                            <option value="30">30 days</option>
+                            <option value="45">45 days</option>
+                            <option value="60">60 days</option>
+                            <option value="90">90 days</option>
+                        </select>
+                        <div class="help-text">How long before you can join a new company?</div>
+                    </div>
+
+                    <!-- Skills Section -->
+                    <div class="form-group skills-container">
+                        <label class="form-label" for="skillsInput">
+                            Skills & Technologies
+                        </label>
+                        <div class="skills-input-container">
+                            <input type="text" id="skillsInput" class="form-input" 
+                                   placeholder="Type a skill and press Enter" 
+                                   onkeypress="handleSkillInput(event)">
+                            <div class="help-text">Add relevant skills, technologies, and tools you're proficient in</div>
+                        </div>
+                        <div class="skills-tags" id="skillsTags">
+                            <!-- Skills will be displayed here -->
+                        </div>
+                        <input type="hidden" id="skills" name="skills">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resume Upload Section -->
+            <section class="form-section slide-up">
+                <h2 class="section-title">
+                    <i class="fas fa-file-upload"></i>
+                    Resume & Documents
+                </h2>
+                <p class="section-subtitle">Upload your latest resume and other relevant documents</p>
+                
+                <div class="form-grid">
+                    <div class="file-upload-container">
+                        <div class="file-upload-area" onclick="triggerResumeUpload()" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                            <div class="file-upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="file-upload-text">Click to upload or drag and drop</div>
+                            <div class="file-upload-subtext">PDF, DOC, DOCX up to 5MB</div>
+                            <input type="file" id="resumeInput" class="file-input" accept=".pdf,.doc,.docx" onchange="handleResumeUpload(event)">
+                        </div>
+                        <div id="uploadedFile" style="display: none;"></div>
+                    </div>
+                </div>
+
+                 
+            </section>
+
+
+          <div class="form-actions">
+            <div>
+                <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                    <i class="fas fa-undo"></i>
+                    Reset Changes
+                </button>
+               
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="save-status" id="saveStatus" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    Changes saved successfully!
+                </div>
+                <button type="submit" form="profileForm" class="btn btn-primary" id="saveButton">
+                    <i class="fas fa-save"></i>
+                    Save Changes
+                </button>
+            </div>
+        </div>

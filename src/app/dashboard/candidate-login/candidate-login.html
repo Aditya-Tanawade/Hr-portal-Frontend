@@ -1,0 +1,62 @@
+<!-- candidate-login.html -->
+<div class="login-page">
+    <!-- Floating particles background -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="form-container">
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Sign in to your candidate account</p>
+
+        <div class="img-container">
+            <div class="avatar">👤</div>
+        </div>
+
+        <form (submit)="loginCandidates(); $event.preventDefault()">
+            <div class="input-group">
+                <label for="email"><b>Email Address</b></label>
+                <input type="text" 
+                       placeholder="Enter your email address" 
+                       name="email" 
+                       [(ngModel)]="loginDto.email" 
+                       required>
+            </div>
+
+            <div class="input-group">
+                <label for="password"><b>Password</b></label>
+                <input type="password" 
+                       placeholder="Enter your password" 
+                       name="password" 
+                       [(ngModel)]="loginDto.password" 
+                       required>
+            </div>
+            
+            <div class="form-options">
+                <label>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label>
+                <a href="#" class="forgot-password">Forgot password?</a>
+            </div>
+
+            <button type="submit" 
+                    class="login-button" 
+                    [class.loading]="isLoading"
+                    [disabled]="isLoading">
+                {{ isLoading ? 'Signing In...' : 'Sign In' }}
+            </button>
+        </form>
+
+        <div class="create-account">
+            <p>Don't have an account? <a routerLink="/dashboard/candidate-registration">Create Account</a></p>
+        </div>
+    </div>
+</div>

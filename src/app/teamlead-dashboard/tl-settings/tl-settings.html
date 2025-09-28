@@ -1,0 +1,60 @@
+ <section class="form-section slide-up">
+                <h2 class="section-title">
+                    <i class="fas fa-cog"></i>
+                    Account Settings
+                </h2>
+                <p class="section-subtitle">Manage your account preferences and security settings</p>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="currentPassword">
+                            Current Password
+                        </label>
+                        <input type="password" id="currentPassword" name="currentPassword" class="form-input" 
+                               placeholder="Enter current password">
+                        <div class="help-text">Required only if you want to change your password</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="newPassword">
+                            New Password
+                        </label>
+                        <input type="password" id="newPassword" name="newPassword" class="form-input" 
+                               placeholder="Enter new password">
+                        <div class="help-text">Leave blank if you don't want to change password</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="confirmPassword">
+                            Confirm New Password
+                        </label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" 
+                               placeholder="Confirm new password">
+                        <div class="error-message" id="passwordError"></div>
+                    </div>
+
+                </div>
+            </section>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+            <div>
+                
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="save-status" id="saveStatus" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    Changes saved successfully!
+                </div>
+                <button type="submit" form="profileForm" class="btn btn-primary" id="saveButton">
+                    <i class="fas fa-save"></i>
+                    Save Changes
+                </button>
+            </div>
+        </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>

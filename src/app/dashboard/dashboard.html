@@ -1,0 +1,79 @@
+
+    <header class="main-header">
+        <div>
+            <a routerLink="/dashboard" class="main-header__brand">
+                🏢 HR PORTAL APPLICATION
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="main-nav__items">
+                <li class="main-nav__item">
+                    <a routerLink="/dashboard/employee-login">👨‍💼 Employee Login</a>
+                    <a routerLink="/dashboard/candidate-login">👤 Candidate Login</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="main-content">
+            <!-- Welcome section - shown only when no child route is active -->
+            <div class="welcome-section" [style.display]="showWelcome ? 'block' : 'none'">
+                <h1 class="section-title">Welcome to HR Portal</h1>
+                <p class="section-subtitle">Your comprehensive Human Resource Management System</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <div class="feature-title">Employee Management</div>
+                        <div class="feature-description">Manage employee profiles, attendance, and performance efficiently</div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📋</div>
+                        <div class="feature-title">Recruitment</div>
+                        <div class="feature-description">Streamline your hiring process from job posting to candidate selection</div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <div class="feature-title">Payroll Management</div>
+                        <div class="feature-description">Automated payroll processing with tax calculations and reporting</div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">Analytics & Reports</div>
+                        <div class="feature-description">Comprehensive HR analytics and customizable reporting tools</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 40px;">
+                    <a routerLink="/dashboard/employee-login" class="button">Get Started as Employee</a>
+                    <a routerLink="/dashboard/candidate-login" class="button">Apply as Candidate</a>
+                </div>
+            </div>
+            
+            <!-- Router outlet for child components -->
+            <div class="child-route-container" [style.display]="showWelcome ? 'none' : 'block'">
+                <router-outlet></router-outlet>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <nav>
+            <ul class="main-footer__links">
+                <li class="main-footer__link">
+                    <a href="#">📞 Support</a>
+                </li>
+                <li class="main-footer__link">
+                    <a href="#">📋 Terms of Use</a>
+                </li>
+                <li class="main-footer__link">
+                    <a href="#">🔒 Privacy Policy</a>
+                </li>
+            </ul>
+        </nav>
+    </footer>
+

@@ -1,0 +1,105 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Registration</title>
+    <link rel="stylesheet" href="candidate-registration.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Candidate Registration</h2>
+
+        <form (submit)="candidateRegistartion()">
+            <div class="input-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" [(ngModel)]="candidateRegistrationDto.fullName"required>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" [(ngModel)]="candidateRegistrationDto.email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="passwordHash">Password</label>
+                <input type="password" id="passwordHash" name="passwordHash" [(ngModel)]="candidateRegistrationDto.passwordHash" required>
+            </div>
+
+            <div class="input-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="candidateRegistrationDto.confirmPassword" required>
+            </div>
+
+            <div class="input-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" pattern="[0-9]{10}" placeholder="e.g., 9876543210"  [(ngModel)]="candidateRegistrationDto.phoneNumber" required>
+            </div>
+
+            <div class="input-group">
+                <label for="candidateRole">Previous Role</label>
+                <input type="text" id="candidateRole" name="candidateRole"  [(ngModel)]="candidateRegistrationDto.candidateRole" required>
+            </div>
+
+            <button type="submit" class="register-btn">Register</button>
+
+            <div class="login-link">
+                <p>Already have an account? <a routerLink="/dashboard/candidate-login">Login here</a></p>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html> -->
+
+
+
+
+<body>
+    <div class="form-container">
+        <h2>Candidate Registration</h2>
+
+        <div id="successMessage" class="message success-message"></div>
+        <div id="errorMessage" class="message error-message"></div>
+
+        <form id="registrationForm">
+            <div class="input-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            </div>
+
+            <div class="input-group">
+                <label for="passwordHash">Password</label>
+                <input type="password" id="passwordHash" name="passwordHash" placeholder="Create a strong password" required>
+            </div>
+
+            <div class="input-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+            </div>
+
+            <div class="input-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" pattern="[0-9]{10}" placeholder="e.g., 9876543210" required>
+            </div>
+
+            <div class="input-group">
+                <label for="candidateRole">Previous Role</label>
+                <input type="text" id="candidateRole" name="candidateRole" placeholder="Enter your previous role" required>
+            </div>
+
+            <button type="submit" class="register-btn" id="registerBtn">
+                Create Account
+            </button>
+
+            <div class="login-link">
+                <p>Already have an account?  <a routerLink="/dashboard/candidate-login">Login here</a></p>
+            </div>
+        </form>
+    </div>

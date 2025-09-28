@@ -1,0 +1,66 @@
+<div id="projects" class="content-section">
+  <div class="page-header">
+    <div class="header-content">
+      <div>
+        <h1 class="page-title">My Projects</h1>
+        <p class="page-subtitle">Projects allocated to your team management</p>
+      </div>
+      <button class="btn btn-primary" onclick="openCreateJobRequestModal()">
+        <i class="fas fa-plus"></i> Request Resources
+      </button>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">E-commerce Platform</div>
+          <div class="card-subtitle">PRJ001 • Assigned by Alex Johnson (PM)</div>
+        </div>
+        <span class="status-badge status-active">Active</span>
+      </div>
+
+      <div class="card-content">
+        <div class="info-row">
+          <span class="info-label">Project Manager:</span>
+          <span class="info-value">Alex Johnson</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Deadline:</span>
+          <span class="info-value">Dec 15, 2024</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Total Budget:</span>
+          <span class="info-value">$150,000</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Team Size:</span>
+          <span class="info-value">8 members</span>
+        </div>
+
+        <div class="progress-section">
+          <div class="progress-header">
+            <span class="progress-text">Project Progress</span>
+            <span class="progress-percentage">68%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 68%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button class="btn btn-primary btn-sm">
+          <i class="fas fa-eye"></i> View Details
+        </button>
+        <button class="btn btn-success btn-sm" onclick="openCreateJobRequestModal('PRJ001')">
+          <i class="fas fa-user-plus"></i> Request Team Members
+        </button>
+        <button class="btn btn-outline btn-sm">
+          <i class="fas fa-chart-line"></i> View Progress
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

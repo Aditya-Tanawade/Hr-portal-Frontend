@@ -1,0 +1,103 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jobie - Candidate Dashboard</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body>
+<div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Jobie.</h2>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item" >
+                        <a routerLink="/candidateDashboard/overview" routerLinkActive="active"  [routerLinkActiveOptions]='{ "exact": true }' class="nav-link "  >
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" >
+                        <a routerLink="/candidateDashboard/my-applications"  routerLinkActive="active"  [routerLinkActiveOptions]='{ "exact": true }' class="nav-link" >
+                            <i class="fas fa-briefcase"></i>
+                            <span>My Applications</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" >
+                        <a  routerLink="/candidateDashboard/find-jobs" routerLinkActive="active"  [routerLinkActiveOptions]='{ "exact": true }'  class="nav-link" >
+                            <i class="fas fa-search"></i>
+                            <span>Find Jobs</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" >
+                        <a routerLink="/candidateDashboard/interviews" routerLinkActive="active"    
+                        [routerLinkActiveOptions]='{ "exact": true }'
+                         class="nav-link" >
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Interviews</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/candidateDashboard/edit-profile"  routerLinkActive="active"  [routerLinkActiveOptions]='{ "exact": true }' class="nav-link" >
+                            <i class="fas fa-user-edit"></i>
+                            <span>Edit Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" >
+                        <a  routerLink="/candidateDashboard/settings" routerLinkActive="active"  [routerLinkActiveOptions]='{ "exact": true }' class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a  routerLink="Logout" class="nav-link">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="welcome-section">
+                    <h1 id="welcomeMessage">Welcome back, John!</h1>
+                    <p>Ready to find your dream job today?</p>
+                </div>
+                
+                <div class="header-actions">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search jobs, companies..." id="globalSearch">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    
+                    <div class="notification-btn" onclick="toggleNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                </div>
+                
+    </header>
+
+    <!-- Router Outlet for child components -->
+    <section class="content-area">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+  
+</div>
+</body>

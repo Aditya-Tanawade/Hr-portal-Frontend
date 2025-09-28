@@ -1,0 +1,1621 @@
+<p>pm-dashboard works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Lead Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Left Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            box-shadow: 6px 0 30px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar-header {
+            padding: 35px 30px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+            text-align: center;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar-brand i {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-profile {
+            padding: 30px 25px;
+            text-align: center;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.02), rgba(118, 75, 162, 0.02));
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            position: relative;
+        }
+
+        .user-avatar::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .user-info h3 {
+            margin: 0 0 8px 0;
+            color: #333;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .user-info p {
+            margin: 0;
+            color: #666;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .sidebar-nav {
+            padding: 25px 0;
+        }
+
+        .nav-section {
+            margin-bottom: 35px;
+        }
+
+        .nav-section-title {
+            padding: 0 30px 15px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #999;
+        }
+
+        .nav-item {
+            margin: 0 20px 8px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 20px;
+            text-decoration: none;
+            color: #666;
+            border-radius: 18px;
+            transition: all 0.4s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .nav-link:hover::before, .nav-link.active::before {
+            left: 0;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: white;
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-link i {
+            font-size: 1.4rem;
+            width: 28px;
+            text-align: center;
+        }
+
+        .notification-badge {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #ff4757, #ff3838);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.4);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 300px;
+            min-height: 100vh;
+            padding: 35px;
+        }
+
+        .page-header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 35px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+            background-size: 200% 100%;
+            animation: gradient 3s ease infinite;
+        }
+
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.4s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            box-shadow: 0 8px 30px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(76, 175, 80, 0.6);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: white;
+            box-shadow: 0 8px 30px rgba(244, 67, 54, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            box-shadow: 0 8px 30px rgba(255, 152, 0, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 10px 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 45px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .stat-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 45px;
+            margin-bottom: 35px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 3px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .section-title i {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            position: relative;
+            border: 2px solid rgba(102, 126, 234, 0.05);
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: left 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(102, 126, 234, 0.2);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .card:hover::before {
+            left: 0;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .card-subtitle {
+            color: #666;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-active { background: linear-gradient(135deg, #4CAF50, #388e3c); color: white; }
+        .status-planning { background: linear-gradient(135deg, #ff9800, #f57c00); color: white; }
+        .status-completed { background: linear-gradient(135deg, #17a2b8, #138496); color: white; }
+        .status-pending { background: linear-gradient(135deg, #ffc107, #ff8f00); color: white; }
+        .status-approved { background: linear-gradient(135deg, #28a745, #1e7e34); color: white; }
+        .status-rejected { background: linear-gradient(135deg, #dc3545, #bd2130); color: white; }
+        .status-interview { background: linear-gradient(135deg, #6f42c1, #5a32a3); color: white; }
+
+        .card-content {
+            margin-bottom: 25px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 10px 0;
+        }
+
+        .info-label {
+            color: #666;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .info-value {
+            font-weight: 700;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .progress-section {
+            margin: 20px 0;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .progress-text {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .progress-percentage {
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .progress-bar {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+            height: 12px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 15px;
+            transition: width 0.8s ease;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        /* Team Member Cards */
+        .team-member-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(102, 126, 234, 0.05);
+            text-align: center;
+        }
+
+        .team-member-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(102, 126, 234, 0.2);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .member-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 15px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .member-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .member-role {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .member-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-online { background: #e8f5e8; color: #4CAF50; }
+        .status-busy { background: #fff3cd; color: #ff9800; }
+        .status-offline { background: #f8d7da; color: #dc3545; }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 25px;
+            padding: 45px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 3px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .modal-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .modal-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .close {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            font-size: 2.2rem;
+            cursor: pointer;
+            color: #999;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close:hover {
+            color: #333;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            background: white;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        /* Interview Section Styles */
+        .interview-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .candidate-profile {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .candidate-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .candidate-info h4 {
+            margin: 0 0 5px 0;
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .candidate-info p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .skills-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 80px;
+            }
+            
+            .sidebar-header, .user-profile {
+                padding: 25px 15px;
+            }
+            
+            .sidebar-brand span, .user-info, .nav-link span, .nav-section-title {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 80px;
+            }
+            
+            .nav-link {
+                justify-content: center;
+                padding: 15px 10px;
+            }
+
+            .nav-link:hover, .nav-link.active {
+                transform: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                width: 300px;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px 15px;
+            }
+            
+            .mobile-menu-btn {
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1001;
+                background: rgba(255, 255, 255, 0.95);
+                border: none;
+                border-radius: 50%;
+                width: 55px;
+                height: 55px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.3rem;
+                cursor: pointer;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+                backdrop-filter: blur(10px);
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 25px;
+                text-align: center;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(40px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .notification {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            padding: 18px 30px;
+            border-radius: 15px;
+            color: white;
+            font-weight: 600;
+            z-index: 2001;
+            transform: translateX(450px);
+            transition: transform 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+        }
+
+        /* Enhanced hover effects */
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-actions .btn:hover {
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Left Sidebar -->
+    <div class="sidebar" id="sidebar">
+
+        <div class="user-profile">
+            <div class="user-avatar">SJ</div>
+            <div class="user-info">
+                <h3>Sarah Johnson</h3>
+                <p>Team Lead - Frontend</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Main</div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link active" onclick="showSection('dashboard')">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('projects')">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>My Projects</span>
+                        <div class="notification-badge">2</div>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('job-requests')">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Job Requests</span>
+                        <div class="notification-badge">3</div>
+                    </a>
+                </div>
+            </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('team-members')">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Team Members</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('settings')">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="content-section active">
+            <div class="page-header fade-in">
+                <div class="header-content">
+                    <div>
+                        <h1 class="page-title">Welcome Back, Sarah!</h1>
+                        <p class="page-subtitle">Lead your team to success and manage projects efficiently</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openCreateJobRequestModal()">
+                        <i class="fas fa-plus"></i> Create Job Request
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid fade-in">
+                <div class="stat-card">
+                    <i class="fas fa-project-diagram stat-icon"></i>
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Active Projects</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clipboard-list stat-icon"></i>
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Pending Requests</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-user-tie stat-icon"></i>
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Interviews Today</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users stat-icon"></i>
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Team Members</div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="content-section active fade-in">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-clock"></i>
+                        Recent Activity
+                    </h2>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Interview Scheduled</div>
+                                <div class="card-subtitle">React Developer Position</div>
+                            </div>
+                            <span class="status-badge status-interview">Today 2:00 PM</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="candidate-profile">
+                                <div class="candidate-avatar">JS</div>
+                                <div class="candidate-info">
+                                    <h4>John Smith</h4>
+                                    <p>4 years experience • Round 1 Interview</p>
+                                </div>
+                            </div>
+                            <div class="skills-tags">
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">MongoDB</span>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-success btn-sm" onclick="conductInterview('CAND001')">
+                                <i class="fas fa-video"></i> Start Interview
+                            </button>
+                            <button class="btn btn-outline btn-sm">
+                                <i class="fas fa-eye"></i> View Profile
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Job Request Approved</div>
+                                <div class="card-subtitle">Frontend Developer - JR001</div>
+                            </div>
+                            <span class="status-badge status-approved">Approved</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="info-row">
+                                <span class="info-label">Approved By:</span>
+                                <span class="info-value">Alex Johnson (PM)</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Budget Allocated:</span>
+                                <span class="info-value">$25,000</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Status:</span>
+                                <span class="info-value">Posted on Job Portal</span>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-primary btn-sm">
+                                <i class="fas fa-eye"></i> View Applications
+                            </button>
+                            <button class="btn btn-outline btn-sm">
+                                <i class="fas fa-edit"></i> Edit Request
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Section -->
+        <div id="projects" class="content-section">
+            <div class="page-header">
+                <div class="header-content">
+                    <div>
+                        <h1 class="page-title">My Projects</h1>
+                        <p class="page-subtitle">Projects allocated to your team management</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openCreateJobRequestModal()">
+                        <i class="fas fa-plus"></i> Request Resources
+                    </button>
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">E-commerce Platform</div>
+                            <div class="card-subtitle">PRJ001 • Assigned by Alex Johnson (PM)</div>
+                        </div>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="info-row">
+                            <span class="info-label">Project Manager:</span>
+                            <span class="info-value">Alex Johnson</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Deadline:</span>
+                            <span class="info-value">Dec 15, 2024</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Total Budget:</span>
+                            <span class="info-value">$150,000</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Team Size:</span>
+                            <span class="info-value">8 members</span>
+                        </div>
+                        <div class="progress-section">
+                            <div class="progress-header">
+                                <span class="progress-text">Project Progress</span>
+                                <span class="progress-percentage">68%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 68%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary btn-sm">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                        <button class="btn btn-success btn-sm" onclick="openCreateJobRequestModal('PRJ001')">
+                            <i class="fas fa-user-plus"></i> Request Team Members
+                        </button>
+                        <button class="btn btn-outline btn-sm">
+                            <i class="fas fa-chart-line"></i> View Progress
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Mobile App Development</div>
+                            <div class="card-subtitle">PRJ002 • Assigned by Alex Johnson (PM)</div>
+                        </div>
+                        <span class="status-badge status-planning">Planning</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="info-row">
+                            <span class="info-label">Project Manager:</span>
+                            <span class="info-value">Alex Johnson</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Deadline:</span>
+                            <span class="info-value">Jan 30, 2025</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Total Budget:</span>
+                            <span class="info-value">$80,000</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Team Size:</span>
+                            <span class="info-value">5 members</span>
+                        </div>
+                        <div class="progress-section">
+                            <div class="progress-header">
+                                <span class="progress-text">Project Progress</span>
+                                <span class="progress-percentage">25%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 25%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary btn-sm">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                        <button class="btn btn-success btn-sm" onclick="openCreateJobRequestModal('PRJ002')">
+                            <i class="fas fa-user-plus"></i> Request Team Members
+                        </button>
+                        <button class="btn btn-outline btn-sm">
+                            <i class="fas fa-tasks"></i> Manage Tasks
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job Requests Section -->
+        <div id="job-requests" class="content-section">
+            <div class="page-header">
+                <div class="header-content">
+                    <div>
+                        <h1 class="page-title">Job Requests</h1>
+                        <p class="page-subtitle">Create and manage resource requests for your projects</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openCreateJobRequestModal()">
+                        <i class="fas fa-plus"></i> Create New Request
+                    </button>
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">React Developer Required</div>
+                            <div class="card-subtitle">JR001 • E-commerce Platform</div>
+                        </div>
+                        <span class="status-badge status-approved">Approved</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="info-row">
+                            <span class="info-label">Project:</span>
+                            <span class="info-value">E-commerce Platform</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Required Skills:</span>
+                            <span class="info-value">React, Node.js, MongoDB</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Experience:</span>
+                            <span class="info-value">3+ years</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Quantity:</span>
+                            <span class="info-value">2 Developers</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Status:</span>
+                            <span class="info-value">Posted on Job Portal</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Applications:</span>
+                            <span class="info-value">15 candidates applied</span>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary btn-sm">
+                            <i class="fas fa-users"></i> View Candidates
+                        </button>
+                        <button class="btn btn-outline btn-sm" onclick="editJobRequest('JR001')">
+                            <i class="fas fa-edit"></i> Edit Request
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">UI/UX Designer</div>
+                            <div class="card-subtitle">JR002 • E-commerce Platform</div>
+                        </div>
+                        <span class="status-badge status-pending">Pending Approval</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="info-row">
+                            <span class="info-label">Project:</span>
+                            <span class="info-value">E-commerce Platform</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Required Skills:</span>
+                            <span class="info-value">Figma, Adobe XD, Prototyping</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Experience:</span>
+                            <span class="info-value">2+ years</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Quantity:</span>
+                            <span class="info-value">1 Designer</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Submitted:</span>
+                            <span class="info-value">Oct 20, 2024</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Urgency:</span>
+                            <span class="info-value">Medium</span>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-warning btn-sm">
+                            <i class="fas fa-clock"></i> Waiting for PM Approval
+                        </button>
+                        <button class="btn btn-outline btn-sm" onclick="editJobRequest('JR002')">
+                            <i class="fas fa-edit"></i> Edit Request
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Flutter Developer</div>
+                            <div class="card-subtitle">JR003 • Mobile App Development</div>
+                        </div>
+                        <span class="status-badge status-pending">Pending Approval</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="info-row">
+                            <span class="info-label">Project:</span>
+                            <span class="info-value">Mobile App Development</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Required Skills:</span>
+                            <span class="info-value">Flutter, Dart, Firebase</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Experience:</span>
+                            <span class="info-value">2+ years</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Quantity:</span>
+                            <span class="info-value">1 Developer</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Submitted:</span>
+                            <span class="info-value">Oct 22, 2024</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Urgency:</span>
+                            <span class="info-value">High</span>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-warning btn-sm">
+                            <i class="fas fa-clock"></i> Waiting for PM Approval
+                        </button>
+                        <button class="btn btn-outline btn-sm" onclick="editJobRequest('JR003')">
+                            <i class="fas fa-edit"></i> Edit Request
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interviews Section -->
+        <div id="interviews" class="content-section">
+            <div class="page-header">
+                <div class="header-content">
+                    <div>
+                        <h1 class="page-title">Interview Management</h1>
+                        <p class="page-subtitle">Conduct interviews for candidates assigned by HR</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Technical Interview - Round 1</div>
+                            <div class="card-subtitle">React Developer Position</div>
+                        </div>
+                        <span class="status-badge status-interview">Today 2:00 PM</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="interview-card">
+                            <div class="candidate-profile">
+                                <div class="candidate-avatar">JS</div>
+                                <div class="candidate-info">
+                                    <h4>John Smith</h4>
+                                    <p>4 years experience • Applied for React Developer</p>
+                                    <div class="skills-tags">
+                                        <span class="skill-tag">React</span>
+                                        <span class="skill-tag">Node.js</span>
+                                        <span class="skill-tag">MongoDB</span>
+                                        <span class="skill-tag">TypeScript</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Interview Type:</span>
+                                <span class="info-value">Technical Round 1</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Duration:</span>
+                                <span class="info-value">60 minutes</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Focus Areas:</span>
+                                <span class="info-value">React, JavaScript, Problem Solving</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-success btn-sm" onclick="conductInterview('CAND001')">
+                            <i class="fas fa-video"></i> Start Interview
+                        </button>
+                        <button class="btn btn-primary btn-sm" onclick="rescheduleInterview('CAND001')">
+                            <i class="fas fa-calendar"></i> Reschedule
+                        </button>
+                        <button class="btn btn-outline btn-sm" onclick="viewCandidateProfile('CAND001')">
+                            <i class="fas fa-eye"></i> View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Technical Interview - Round 1</div>
+                            <div class="card-subtitle">UI/UX Designer Position</div>
+                        </div>
+                        <span class="status-badge status-interview">Tomorrow 10:00 AM</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="interview-card">
+                            <div class="candidate-profile">
+                                <div class="candidate-avatar">LW</div>
+                                <div class="candidate-info">
+                                    <h4>Lisa Wong</h4>
+                                    <p>3 years experience • Applied for UI/UX Designer</p>
+                                    <div class="skills-tags">
+                                        <span class="skill-tag">Figma</span>
+                                        <span class="skill-tag">Adobe XD</span>
+                                        <span class="skill-tag">Sketch</span>
+                                        <span class="skill-tag">Prototyping</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Interview Type:</span>
+                                <span class="info-value">Design Portfolio Review</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Duration:</span>
+                                <span class="info-value">90 minutes</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Focus Areas:</span>
+                                <span class="info-value">Portfolio, Design Process, UX Thinking</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary btn-sm" onclick="prepareInterview('CAND002')">
+                            <i class="fas fa-clipboard-list"></i> Prepare Interview
+                        </button>
+                        <button class="btn btn-outline btn-sm" onclick="rescheduleInterview('CAND002')">
+                            <i class="fas fa-calendar"></i> Reschedule
+                        </button>
+                        <button class="btn btn-outline btn-sm" onclick="viewCandidateProfile('CAND002')">
+                            <i class="fas fa-eye"></i> View Portfolio
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Interview Completed</div>
+                            <div class="card-subtitle">Flutter Developer Position</div>
+                        </div>
+                        <span class="status-badge status-completed">Completed</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="interview-card">
+                            <div class="candidate-profile">
+                                <div class="candidate-avatar">MR</div>
+                                <div class="candidate-info">
+                                    <h4>Mike Rodriguez</h4>
+                                    <p>5 years experience • Applied for Flutter Developer</p>
+                                    <div class="skills-tags">
+                                        <span class="skill-tag">Flutter</span>
+                                        <span class="skill-tag">Dart</span>
+                                        <span class="skill-tag">Firebase</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Interview Date:</span>
+                                <span class="info-value">Oct 20, 2024</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Result:</span>
+                                <span class="info-value">✅ Passed to Round 2</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Score:</span>
+                                <span class="info-value">8.5/10</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-outline btn-sm" onclick="viewInterviewFeedback('CAND003')">
+                            <i class="fas fa-eye"></i> View Feedback
+                        </button>
+                        <button class="btn btn-primary btn-sm" onclick="editFeedback('CAND003')">
+                            <i class="fas fa-edit"></i> Edit Feedback
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Members Section -->
+        <div id="team-members" class="content-section">
+            <div class="page-header">
+                <div class="header-content">
+                    <div>
+                        <h1 class="page-title">Team Members</h1>
+                        <p class="page-subtitle">Manage and monitor your team performance</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openAddMemberModal()">
+                        <i class="fas fa-user-plus"></i> Request New Member
+                    </button>
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="team-member-card">
+                    <div class="member-avatar">AD</div>
+                    <div class="member-name">Alex Davis</div>
+                    <div class="member-role">Senior React Developer</div>
+                    <div class="member-status status-online">
+                        <i class="fas fa-circle"></i> Online
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <div class="info-row">
+                            <span class="info-label">Current Project:</span>
+                            <span class="info-value">E-commerce Platform</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Performance:</span>
+                            <span class="info-value">Excellent</span>
+                        </div>
+                    </div>
+                    <div class="card-actions" style="margin-top: 20px;">
+                        <button class="btn btn-outline btn-sm">
+                            <i class="fas fa-eye"></i> View Profile
+                        </button>
+                        <button class="btn btn-primary btn-sm">
+                            <i class="fas fa-tasks"></i> Assign Task
+                        </button>
+                    </div>
+                </div>
+
+                <div class="team-member-card">
+                    <div class="member-avatar">EP</div>
+                    <div class="member-name">Emma Parker</div>
+                    <div class="member-role">Frontend Developer</div>
+                    <div class="member-status status-busy">
+                        <i class="fas fa-circle"></i> Busy
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <div class="info-row">
+                            <span class="info-label">Current Project:</span>
+                            <span class="info-value">E-commerce Platform</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Performance:</span>
+                            <span class="info-value">Good</span>
+                        </div>
+                    </div>
+                    <div class="card-actions" style="margin-top: 20px;">
+                        <button class="btn btn-outline btn-sm">
+                            <i class="fas fa-eye"></i> View Profile
+                        </button>
+                        <button class="btn btn-primary btn-sm">
+                            <i class="fas fa-tasks"></i> Assign Task
+                        </button>
+                    </div>
+                </div>
+
+              

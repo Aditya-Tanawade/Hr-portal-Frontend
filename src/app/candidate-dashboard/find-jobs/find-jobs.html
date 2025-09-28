@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jobie - Candidate Dashboard</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+</head>
+<body>
+  <div class="find-jobs-container">
+    <!-- Header Section -->
+    <header class="jobs-header">
+      <div class="header-content">
+        <h1 class="page-title">Find Your Dream Job</h1>
+        <p class="page-subtitle">
+          Discover thousands of opportunities from top companies
+        </p>
+
+        <div class="search-section">
+          <div class="search-container">
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Job title, skills, or company"
+              id="jobSearchInput"
+            />
+            <i class="fas fa-search search-icon"></i>
+          </div>
+
+          <div class="location-container">
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Location"
+              id="locationInput"
+            />
+            <i class="fas fa-map-marker-alt search-icon"></i>
+          </div>
+
+          <button class="search-btn">
+            <i class="fas fa-search"></i> Search Jobs
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+  <div class="filters-header">
+    <h2 class="filters-title">Refine Your Search</h2>
+    <button class="clear-filters-btn">
+      <i class="fas fa-times"></i> Clear All
+    </button>
+  </div>
+
+  <!-- New row wrapper -->
+  <div class="filters-row">
+    <div class="filter-group">
+      <label class="filter-label">Experience Level</label>
+      <select class="filter-select" id="experienceFilter">
+        <option value="">All Levels</option>
+        <option value="entry">Entry Level (0-2 years)</option>
+        <option value="mid">Mid Level (2-5 years)</option>
+        <option value="senior">Senior Level (5-8 years)</option>
+        <option value="lead">Lead/Manager (8+ years)</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Job Type</label>
+      <select class="filter-select" id="jobTypeFilter">
+        <option value="">All Types</option>
+        <option value="fulltime">Full-time</option>
+        <option value="parttime">Part-time</option>
+        <option value="contract">Contract</option>
+        <option value="freelance">Freelance</option>
+        <option value="internship">Internship</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Salary Range (LPA)</label>
+      <div class="salary-range-container">
+        <input type="number" class="salary-input" placeholder="Min" id="minSalary" />
+        <span>to</span>
+        <input type="number" class="salary-input" placeholder="Max" id="maxSalary" />
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Work Mode</label>
+      <select class="filter-select" id="workModeFilter">
+        <option value="">All Modes</option>
+        <option value="office">Office</option>
+        <option value="remote">Remote</option>
+        <option value="hybrid">Hybrid</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+        
+
+    
+
+        
+      
+
+    <!-- Results Section -->
+    <section class="jobs-results">
+      <div class="results-header">
+        <div class="results-count">
+          Showing <strong id="jobsCount">0</strong> jobs
+        </div>
+        <select class="sort-dropdown" id="sortJobs">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="salary-high">Salary: High to Low</option>
+          <option value="salary-low">Salary: Low to High</option>
+          <option value="company">Company A-Z</option>
+          <option value="relevance">Most Relevant</option>
+        </select>
+      </div>
+
+      <!-- Jobs Container -->
+      <!-- <div id="jobsContainer">
+        <div class="loading-state" id="loadingState">
+          <div class="spinner"></div>
+        </div>
+      </div> -->
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState" style="display: none;">
+        <div class="empty-icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <h2 class="empty-title">No Jobs Found</h2>
+        <p class="empty-description">
+          Try adjusting your search criteria or filters to find more opportunities.
+        </p>
+        <button class="btn btn-primary">
+          <i class="fas fa-refresh"></i>
+          Clear Filters
+        </button>
+      </div>
+
+
+      
+    </section>
+
+
+    <div class="job-card">
+  <h3 class="job-title">UI/UX Designer</h3>
+  <p class="job-location">Hyderabad, Telangana</p>
+  <p class="salary-range">₹12L – ₹18L per annum</p>
+  <br>
+
+  <div class="skills-list">
+    <span class="skill-tag">Figma</span>
+    <span class="skill-tag">Adobe XD</span>
+    <span class="skill-tag">Sketch</span>
+    <span class="skill-tag">Prototyping</span>
+    <span class="skill-tag">User Research</span>
+  </div>
+
+  <p class="job-description">
+    Design intuitive and beautiful user experiences for our enterprise software products. 
+    Collaborate with cross-functional teams to bring ideas to life.
+  </p>
+
+  <ul class="job-meta">
+    <li><strong>Experience:</strong> Mid</li>
+    <li><strong>Company Size:</strong> Enterprise</li>
+    <li><strong>Applicants:</strong> 89</li>
+    <li><strong>Posted:</strong> Sep 24, 2025</li>
+  </ul>
+
+  <div class="job-footer">
+    <div class="applicants-count">
+      89 applicants so far
+    </div>
+    <div class="job-actions-footer">
+      <button class="btn btn-outline">Save</button>
+      <button class="btn btn-primary">Apply Now</button>
+    </div>
+  </div>
+</div>
+
+
+
+  </div>
+</body>
+</html>
