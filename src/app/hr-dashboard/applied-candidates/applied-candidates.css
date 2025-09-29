@@ -1,0 +1,237 @@
+/* General Layout */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7fc;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.content-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.page-subtitle {
+    font-size: 16px;
+    color: #7f8c8d;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.filter-panel {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-group {
+    flex: 1 1 calc(33.33% - 20px);
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dcdfe1;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* Candidate Card Styles */
+.candidate-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.candidate-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.candidate-profile {
+    display: flex;
+    padding: 20px;
+    background-color: #f6f8fa;
+    border-bottom: 1px solid #f0f0f0;
+    align-items: center;
+}
+
+.candidate-avatar {
+    width: 60px;
+    height: 60px;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 600;
+    margin-right: 20px;
+}
+
+.candidate-info {
+    flex-grow: 1;
+}
+
+.candidate-info h4 {
+    font-size: 18px;
+    color: #2c3e50;
+    font-weight: 600;
+    margin: 0;
+}
+
+.candidate-info p {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin: 5px 0;
+}
+
+.skills-tags {
+    margin-top: 10px;
+}
+
+.skill-tag {
+    background-color: #ecf0f1;
+    color: #3498db;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-right: 8px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.card-content {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.info-row {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #7f8c8d;
+}
+
+.info-value {
+    font-size: 14px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.card-actions {
+    padding: 15px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #f0f0f0;
+}
+
+.card-actions .btn {
+    padding: 8px 16px;
+    font-size: 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    width: 120px; /* Set width for all buttons */
+    text-align: center;
+}
+
+.card-actions .btn-sm {
+    padding: 6px 12px;
+    width: 100px; /* Smaller width for smaller buttons */
+}
+
+.card-actions .btn-success {
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+}
+
+.card-actions .btn-success:hover {
+    background-color: #27ae60;
+}
+
+.card-actions .btn-outline {
+    background-color: transparent;
+    border: 1px solid #3498db;
+    color: #3498db;
+}
+
+.card-actions .btn-outline:hover {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.card-actions .btn-danger {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+}
+
+.card-actions .btn-danger:hover {
+    background-color: #c0392b;
+}

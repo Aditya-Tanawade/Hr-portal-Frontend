@@ -19,6 +19,20 @@ import { JobRequest } from './teamlead-dashboard/job-request/job-request';
 import { PendingInterviews } from './teamlead-dashboard/pending-interviews/pending-interviews';
 import { TeamMembers } from './teamlead-dashboard/team-members/team-members';
 import { TlSettings } from './teamlead-dashboard/tl-settings/tl-settings';
+import { HrDashboard } from './hr-dashboard/hr-dashboard';
+import { PmOverview } from './pm-dashboard/pm-overview/pm-overview';
+import { AssignProject } from './pm-dashboard/assign-project/assign-project';
+import { PmJobRequests } from './pm-dashboard/pm-job-requests/pm-job-requests';
+import { PmTeamMembers } from './pm-dashboard/pm-team-members/pm-team-members';
+import { PmPendingInterviews } from './pm-dashboard/pm-pending-interviews/pm-pending-interviews';
+import { PmSettings } from './pm-dashboard/pm-settings/pm-settings';
+import { BenchEmployees } from './pm-dashboard/bench-employees/bench-employees';
+import { HrOverview } from './hr-dashboard/hr-overview/hr-overview';
+import { HrJobRequests } from './hr-dashboard/hr-job-requests/hr-job-requests';
+import { HrSettings } from './hr-dashboard/hr-settings/hr-settings';
+import { ShortlistedCandidates } from './hr-dashboard/shortlisted-candidates/shortlisted-candidates';
+import { HrInterviews } from './hr-dashboard/hr-interviews/hr-interviews';
+import { AppliedCandidates } from './hr-dashboard/applied-candidates/applied-candidates';
 //import { CandidateMyapplications } from './candidate-dashboard/candidate-myapplications/candidate-myapplications';
 //import { CandidateEditProfile } from './candidate-dashboard/candidate-edit-profile/candidate-edit-profile';
 
@@ -67,11 +81,11 @@ export const routes: Routes = [
   },
 
 
-  { path: 'tl-dashbaord', redirectTo: 'tl-dashbaord/overview', pathMatch: 'full' },
+  { path: 'tl-dashboard', redirectTo: 'tl-dashboard/overview', pathMatch: 'full' },
 
 
   {
-    path: 'tl-dashbaord',
+    path: 'tl-dashboard',
     component: TeamleadDashboard,
     children: [
       {
@@ -102,11 +116,83 @@ export const routes: Routes = [
   },
 
 
-  { path: 'tl-dashbaord', component: TeamleadDashboard },
+
+  { path: 'pm-dashboard', redirectTo: 'pm-dashboard/overview', pathMatch: 'full' },
+
+
+  {
+    path: 'pm-dashboard',
+    component: PmDashboard,
+    children: [
+      {
+        path: 'overview',
+        component: PmOverview, // Your default dashboard
+      },
+      {
+        path: 'assign-project',
+        component: AssignProject,
+      },
+      {
+        path: 'job-requests',
+        component: PmJobRequests,
+      },
+      {
+        path: 'bench-employees',
+        component: BenchEmployees,
+      },
+      {
+        path: 'team-members',
+        component: PmTeamMembers,
+      },
+      {
+        path: 'pending-interviews',
+        component: PmPendingInterviews,
+      },
+      {
+        path: 'settings',
+        component: PmSettings,
+      },
+    ],
+  },
+
+  { path: 'hr-dashboard', component: HrDashboard },
+
+  { path: 'hr-dashboard', redirectTo: 'hr-dashboard/overview', pathMatch: 'full' },
+
+
+  {
+    path: 'hr-dashboard',
+    component: HrDashboard,
+    children: [
+      {
+        path: 'overview',
+        component: HrOverview, 
+      },
+      {
+        path: 'job-requests',
+        component: HrJobRequests,
+      },
+      {
+        path: 'applied-candidates',
+        component: AppliedCandidates,
+      },
+      {
+        path: 'shortlisted-candidates',
+        component: ShortlistedCandidates,
+      },
+      {
+        path: 'interviews',
+        component: HrInterviews,
+      },
+      {
+        path: 'settings',
+        component: HrSettings,
+      },
+    ],
+  },
 
 
 
-  { path: 'pm-dashbaord', component: PmDashboard },
 
 
   { path: '**', redirectTo: 'candidate-login' }

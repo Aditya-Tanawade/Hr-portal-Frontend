@@ -1,0 +1,101 @@
+<div class="dialog-modern">
+  <div class="dialog-header">
+    <div class="dialog-icon">
+      <i class="fas fa-exclamation-triangle"></i>
+    </div>
+    <h2 mat-dialog-title class="dialog-title">Delete Account?</h2>
+    <p class="dialog-subtitle">This action cannot be undone</p>
+  </div>
+  
+  <mat-dialog-content class="dialog-content">
+    <p class="dialog-message">
+      Are you absolutely sure you want to delete your account? All your data, 
+      settings, and information will be permanently removed.
+    </p>
+    <div class="dialog-warning">
+      <i class="fas fa-shield-alt dialog-warning-icon"></i>
+      <span class="dialog-warning-text">This action is irreversible!</span>
+    </div>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions class="dialog-actions">
+    <button mat-button class="btn btn-cancel" (click)="onCancel()">
+      <i class="fas fa-times"></i> Cancel
+    </button>
+    <button mat-button class="btn btn-delete" (click)="onConfirm()">
+      <i class="fas fa-trash"></i> Delete Account
+    </button>
+  </mat-dialog-actions>
+</div>
+
+
+<!-- 
+<div class="dialog-elegant">
+  <div class="dialog-header">
+    <div class="dialog-icon">
+      <i class="fas fa-user-slash"></i>
+    </div>
+    <h2 mat-dialog-title class="dialog-title">Confirm Deletion</h2>
+    <p class="dialog-subtitle">Account will be permanently removed</p>
+  </div>
+  
+  <mat-dialog-content class="dialog-content">
+    <p class="dialog-message">
+      This will permanently delete your account and all associated data. This action cannot be reversed.
+    </p>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions class="dialog-actions">
+    <button mat-button class="btn btn-cancel" (click)="onCancel()">
+      <i class="fas fa-arrow-left"></i> Go Back
+    </button>
+    <button mat-button class="btn btn-delete" (click)="onConfirm()">
+      <i class="fas fa-check"></i> Confirm
+    </button>
+  </mat-dialog-actions>
+</div> -->
+
+
+
+<!-- <div class="dialog-minimal">
+  <div class="dialog-icon">
+    <i class="fas fa-trash-alt"></i>
+  </div>
+  <h2 mat-dialog-title class="dialog-title">Delete Account</h2>
+  <mat-dialog-content>
+    <p class="dialog-message">
+      Are you sure you want to delete your account? This action is irreversible and all your data will be lost.
+    </p>
+  </mat-dialog-content>
+  <mat-dialog-actions class="dialog-actions">
+    <button mat-button class="btn btn-cancel" (click)="onCancel()">Cancel</button>
+    <button mat-button class="btn btn-delete" (click)="onConfirm()">Delete</button>
+  </mat-dialog-actions>
+</div> -->
+
+
+
+<!-- <div class="dialog-dark">
+  <div class="dialog-header">
+    <div class="dialog-icon">
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <h2 mat-dialog-title class="dialog-title">Dangerous Action</h2>
+    <p class="dialog-subtitle">Account deletion is permanent</p>
+  </div>
+  
+  <mat-dialog-content class="dialog-content">
+    <p class="dialog-message">
+      You are about to permanently delete your account. All your data and content will be lost forever.
+    </p>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions class="dialog-actions">
+    <button mat-button class="btn btn-cancel" (click)="onCancel()">
+      <i class="fas fa-ban"></i> Cancel
+    </button>
+    <button mat-button class="btn btn-delete" (click)="onConfirm()">
+      <i class="fas fa-skull-crossbones"></i> Delete
+    </button>
+  </mat-dialog-actions>
+</div> -->

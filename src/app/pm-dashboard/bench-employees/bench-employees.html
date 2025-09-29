@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bench Employees</title>
+
+<!-- FontAwesome for icons -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+</head>
+<body>
+
+<h1>Bench Employees</h1>
+<p class="subtitle">Filter employees by skills, experience, and role</p>
+
+<!-- Filter Bar -->
+<div class="filter-bar">
+  <input type="text" id="skillsFilter" placeholder="Filter by skills (comma separated)" />
+  <input type="number" id="minExperience" placeholder="Min experience (years)" min="0" step="0.1" />
+  <select id="roleFilter">
+    <option value="">All Roles</option>
+    <option value="developer">Developer</option>
+    <option value="designer">Designer</option>
+    <option value="tester">Tester</option>
+    <option value="manager">Manager</option>
+    <option value="analyst">Analyst</option>
+  </select>
+  <button onclick="applyFilters()"><i class="fas fa-filter"></i> Filter</button>
+</div>
+
+<!-- Employees Grid -->
+<div class="employees-grid" id="employeesGrid">
+  <!-- Example employee cards - You will dynamically generate these from backend data -->
+
+  <div class="employee-card" data-skills="react,javascript,redux" data-experience="3.5" data-role="developer" data-active="true">
+    <div class="employee-header">
+      <div class="avatar">JS</div>
+      <div>
+        <div class="employee-name">John Smith</div>
+        <div class="employee-email">john.smith@example.com</div>
+      </div>
+    </div>
+    <div class="employee-info"><span class="info-label">Employee ID:</span> EMP001</div>
+    <div class="employee-info"><span class="info-label">Gender:</span> Male</div>
+    <div class="employee-info"><span class="info-label">Experience:</span> 3.5 years</div>
+    <div class="employee-info"><span class="info-label">Role:</span> Developer</div>
+    <div class="employee-info"><span class="info-label">Active Status:</span> 
+      <span class="status-badge active-badge">Active</span>
+    </div>
+    <div class="employee-info"><span class="info-label">Skills:</span></div>
+    <div class="skills-list">
+      <span>React</span>
+      <span>JavaScript</span>
+      <span>Redux</span>
+    </div>
+      <div style="margin-top:auto; text-align: right;">
+    <div class="assign-button-container">
+  <button 
+    class="btn-assign" 
+    onclick="assignProject('EMP001')">
+    <i class="fas fa-tasks"></i> Assign Project
+  </button>
+</div>
+  </div>
+
+  </div>
+
+  <div class="employee-card" data-skills="java,spring,mysql" data-experience="5.0" data-role="developer" data-active="true">
+    <div class="employee-header">
+      <div class="avatar">AL</div>
+      <div>
+        <div class="employee-name">Alice Lee</div>
+        <div class="employee-email">alice.lee@example.com</div>
+      </div>
+    </div>
+    <div class="employee-info"><span class="info-label">Employee ID:</span> EMP002</div>
+    <div class="employee-info"><span class="info-label">Gender:</span> Female</div>
+    <div class="employee-info"><span class="info-label">Experience:</span> 5.0 years</div>
+    <div class="employee-info"><span class="info-label">Role:</span> Developer</div>
+    <div class="employee-info"><span class="info-label">Active Status:</span> 
+      <span class="status-badge active-badge">Active</span>
+    </div>
+    <div class="employee-info"><span class="info-label">Skills:</span></div>
+    <div class="skills-list">
+      <span>Java</span>
+      <span>Spring</span>
+      <span>MySQL</span>
+    </div>
+      <div style="margin-top:auto; text-align: right;">
+    <button 
+    class="btn-assign" 
+    onclick="assignProject('EMP001')">
+    <i class="fas fa-tasks"></i> Assign Project
+  </button>
+  </div>
+
+  </div>
+
+  <div class="employee-card" data-skills="figma,adobe xd,prototyping" data-experience="2.5" data-role="designer" data-active="false">
+    <div class="employee-header">
+      <div class="avatar">MG</div>
+      <div>
+        <div class="employee-name">Maria Gomez</div>
+        <div class="employee-email">maria.gomez@example.com</div>
+      </div>
+    </div>
+    <div class="employee-info"><span class="info-label">Employee ID:</span> EMP003</div>
+    <div class="employee-info"><span class="info-label">Gender:</span> Female</div>
+    <div class="employee-info"><span class="info-label">Experience:</span> 2.5 years</div>
+    <div class="employee-info"><span class="info-label">Role:</span> Designer</div>
+    <div class="employee-info"><span class="info-label">Active Status:</span> 
+      <span class="status-badge inactive-badge">Inactive</span>
+    </div>
+    <div class="employee-info"><span class="info-label">Skills:</span></div>
+    <div class="skills-list">
+      <span>Figma</span>
+      <span>Adobe XD</span>
+      <span>Prototyping</span>
+    </div>
+    <!-- inside each employee-card div, at the bottom -->
+
+      <div style="margin-top:auto; text-align: right;">
+    <button 
+    class="btn-assign" 
+    onclick="assignProject('EMP001')">
+    <i class="fas fa-tasks"></i> Assign Project
+  </button>
+  </div>
+
+  </div>
+
+  <!-- More employee cards can be appended here dynamically -->
+</div>
+
+<div class="no-results" id="noResults" style="display:none;">No employees match your filter criteria.</div>
+
+<script>
+  function applyFilters() {
+    const skillsInput = document.getElementById('skillsFilter').value.toLowerCase().trim();
+    const minExp = parseFloat(document.getElementById('minExperience').value);
+    const roleFilter = document.getElementById('roleFilter').value.toLowerCase();
+
+    const skillFilters = skillsInput ? skillsInput.split(',').map(s => s.trim()) : [];
+    const employees = document.querySelectorAll('.employee-card');
+    let visibleCount = 0;
+
+    employees.forEach(emp => {
+      const empSkills = emp.dataset.skills.toLowerCase().split(',');
+      const empExperience = parseFloat(emp.dataset.experience);
+      const empRole = emp.dataset.role.toLowerCase();
+
+      // Check skills filter (all skillFilters must be included in empSkills)
+      const skillsMatch = skillFilters.every(skill => empSkills.includes(skill));
+
+      // Check experience filter
+      const expMatch = isNaN(minExp) || empExperience >= minExp;
+
+      // Check role filter
+      const roleMatch = !roleFilter || empRole === roleFilter;
+
+      if (skillsMatch && expMatch && roleMatch) {
+        emp.style.display = 'flex';
+        visibleCount++;
+      } else {
+        emp.style.display = 'none';
+      }
+    });
+
+    // Show no results message if nothing visible
+    document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+  }
+</script>
+
+</body>
+</html>

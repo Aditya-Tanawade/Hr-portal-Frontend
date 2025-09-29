@@ -1,0 +1,525 @@
+ * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 30px;
+            background: #f8f9fa;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .dialog-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .style-label {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        /* Style 1: Modern Glass */
+        .dialog-modern {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 0;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            width: 100%;
+            max-width: 420px;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .dialog-modern .dialog-header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            padding: 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .dialog-modern .dialog-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 2rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dialog-modern .dialog-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .dialog-modern .dialog-subtitle {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .dialog-modern .dialog-content {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .dialog-modern .dialog-message {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .dialog-modern .dialog-warning {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(238, 90, 82, 0.1));
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .dialog-modern .dialog-warning-icon {
+            color: #ff6b6b;
+            font-size: 1.3rem;
+        }
+
+        .dialog-modern .dialog-warning-text {
+            color: #d63031;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .dialog-modern .dialog-actions {
+            padding: 0 25px 25px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+
+        /* Style 2: Elegant Gradient */
+        .dialog-elegant {
+            background: white;
+            border-radius: 20px;
+            padding: 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            border: 1px solid #f0f0f0;
+            width: 100%;
+            max-width: 420px;
+            overflow: hidden;
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        .dialog-elegant .dialog-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .dialog-elegant .dialog-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+        }
+
+        .dialog-elegant .dialog-icon {
+            width: 65px;
+            height: 65px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.8rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dialog-elegant .dialog-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .dialog-elegant .dialog-content {
+            padding: 30px 25px 25px;
+            text-align: center;
+        }
+
+        .dialog-elegant .dialog-message {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .dialog-elegant .dialog-actions {
+            padding: 0 25px 25px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        /* Style 3: Minimalist Clean */
+        .dialog-minimal {
+            background: white;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f0f0f0;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            animation: zoomIn 0.3s ease-out;
+        }
+
+        .dialog-minimal .dialog-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.6rem;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .dialog-minimal .dialog-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .dialog-minimal .dialog-message {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .dialog-minimal .dialog-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        /* Style 4: Dark Premium */
+        .dialog-dark {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            border-radius: 22px;
+            padding: 0;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 420px;
+            color: white;
+            overflow: hidden;
+            animation: slideInScale 0.4s ease-out;
+        }
+
+        .dialog-dark .dialog-header {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .dialog-dark .dialog-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+        }
+
+        .dialog-dark .dialog-icon {
+            width: 68px;
+            height: 68px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.9rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .dialog-dark .dialog-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .dialog-dark .dialog-subtitle {
+            opacity: 0.9;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dialog-dark .dialog-content {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .dialog-dark .dialog-message {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .dialog-dark .dialog-actions {
+            padding: 0 25px 25px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        /* Common Button Styles */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-width: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn:hover::before {
+            width: 180px;
+            height: 180px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Modern Style Buttons */
+        .dialog-modern .btn-cancel {
+            background: #f8f9fa;
+            color: #6c757d;
+            border: 2px solid #e9ecef;
+        }
+
+        .dialog-modern .btn-cancel:hover {
+            background: #e9ecef;
+            color: #495057;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .dialog-modern .btn-delete {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .dialog-modern .btn-delete:hover {
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
+        }
+
+        /* Elegant Style Buttons */
+        .dialog-elegant .btn-cancel {
+            background: transparent;
+            color: #6c757d;
+            border: 2px solid #e9ecef;
+        }
+
+        .dialog-elegant .btn-cancel:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .dialog-elegant .btn-delete {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: 2px solid transparent;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .dialog-elegant .btn-delete:hover {
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Minimal Style Buttons */
+        .dialog-minimal .btn-cancel {
+            background: #f8f9fa;
+            color: #6c757d;
+            border: 2px solid #e9ecef;
+        }
+
+        .dialog-minimal .btn-cancel:hover {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .dialog-minimal .btn-delete {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .dialog-minimal .btn-delete:hover {
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
+        }
+
+        /* Dark Style Buttons */
+        .dialog-dark .btn-cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dialog-dark .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .dialog-dark .btn-delete {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+        }
+
+        .dialog-dark .btn-delete:hover {
+            box-shadow: 0 12px 35px rgba(231, 76, 60, 0.6);
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInScale {
+            from {
+                opacity: 0;
+                transform: translateY(-15px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                grid-template-columns: 1fr;
+                padding: 20px;
+                gap: 30px;
+            }
+
+            .dialog-modern,
+            .dialog-elegant,
+            .dialog-minimal,
+            .dialog-dark {
+                max-width: 100%;
+            }
+
+            .btn {
+                min-width: 100px;
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .dialog-actions {
+                flex-direction: column;
+                gap: 10px !important;
+            }
+
+            .dialog-actions .btn {
+                width: 100%;
+            }
+        }

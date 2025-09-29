@@ -1,11 +1,13 @@
 import { AfterViewInit, Component, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Dashboard } from "./dashboard/dashboard";
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 declare var feather: any;
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, Dashboard],
+  imports: [RouterOutlet, RouterLink, Dashboard,MatDialogModule,MatButtonModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

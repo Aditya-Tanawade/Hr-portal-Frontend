@@ -1,80 +1,11 @@
-<!-- <body>
-  <button class="mobile-menu-btn" onclick="toggleSidebar()">
-    <i class="fas fa-bars"></i>
-  </button>
 
-  <div class="sidebar" id="sidebar">
-    <div class="user-profile">
-      <div class="user-avatar">SJ</div>
-      <div class="user-info">
-        <h3>Sarah Johnson</h3>
-        <p>Team Lead - Frontend</p>
-      </div>
-    </div>
-
-    <nav class="sidebar-nav">
-      <div class="nav-section">
-        <div class="nav-item">
-          <a href="#" class="nav-link active" onclick="showSection('dashboard')">
-            <i class="fas fa-home"></i>
-            <span>Dashboard</span>
-          </a>
-        </div>
-        <div class="nav-item">
-          <a href="#" class="nav-link" onclick="showSection('projects')">
-            <i class="fas fa-project-diagram"></i>
-            <span>My Projects</span>
-            <div class="notification-badge">2</div>
-          </a>
-        </div>
-        <div class="nav-item">
-          <a href="#" class="nav-link" onclick="showSection('job-requests')">
-            <i class="fas fa-clipboard-list"></i>
-            <span>Job Requests</span>
-            <div class="notification-badge">3</div>
-          </a>
-        </div>
-      </div>
-      <div class="nav-item">
-        <a href="#" class="nav-link" onclick="showSection('team-members')">
-          <i class="fas fa-user-friends"></i>
-          <span>Team Members</span>
-        </a>
-      </div>
-      <div class="nav-item">
-        <a href="#" class="nav-link" onclick="showSection('settings')">
-          <i class="fas fa-cog"></i>
-          <span>Settings</span>
-        </a>
-      </div>
-    </nav>
-  </div>
-  <div class="main-content">
-
-
-
-    <div id="dashboard" class="content-section active">
-      <div class="page-header fade-in">
-        <div class="header-content">
-          <div>
-            <h1 class="page-title">Welcome Back, Sarah!</h1>
-            <p class="page-subtitle">Lead your team to success and manage projects efficiently</p>
-          </div>
-          <button class="btn btn-primary" onclick="openCreateJobRequestModal()">
-            <i class="fas fa-plus"></i> Create Job Request
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</body> -->
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jobie - Team Lead Dashboard</title>
+    <title>Jobie - HR  Dashboard</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
@@ -88,13 +19,12 @@
     <div class="dashboard-container">
       <!-- Sidebar -->
       <aside class="sidebar">
-        
 
         <div class="user-profile">
-          <div class="user-avatar">SJ</div>
+          <div class="user-avatar">AJ</div>
           <div class="user-info">
-            <h3>Sarah Johnson</h3>
-            <p>Team Lead - Frontend</p>
+            <h3>Maya Kumar</h3>
+            <p>HR Manager</p>
           </div>
         </div>
 
@@ -102,7 +32,7 @@
           <ul class="nav-menu">
             <li class="nav-item">
               <a
-                routerLink="/tl-dashboard/overview"
+                routerLink="/hr-dashboard/overview"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
                 class="nav-link"
@@ -113,51 +43,52 @@
             </li>
             <li class="nav-item">
               <a
-                routerLink="/tl-dashboard/my-projects"
+                routerLink="/hr-dashboard/job-requests"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
                 class="nav-link"
               >
-                <i class="fas fa-project-diagram"></i>
-                <span>My Projects</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                routerLink="/tl-dashboard/job-requests"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                class="nav-link"
-              >
-                <i class="fas fa-clipboard-list"></i>
+                <i class="fas fa-user-plus"></i>
                 <span>Job Requests</span>
               </a>
             </li>
             <li class="nav-item">
               <a
-                routerLink="/tl-dashboard/team-members"
+                routerLink="/hr-dashboard/applied-candidates"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="nav-link"
+              >
+                <i class="fas fa-clipboard-list"></i>
+                <span>Applied Candidates</span>
+              </a>
+            </li>
+             <li class="nav-item">
+              <a
+                routerLink="/hr-dashboard/shortlisted-candidates"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
                 class="nav-link"
               >
                 <i class="fas fa-user-friends"></i>
-                <span>Team Members</span>
+                <span>Shortlisted Candidates</span>
               </a>
             </li>
+            
             <li class="nav-item">
               <a
-                routerLink="/tl-dashboard/pending-interviews"
+                routerLink="/hr-dashboard/interviews"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
                 class="nav-link"
               >
                 <i class="fas fa-calendar-alt"></i>
-                <span>Pending Interviews</span>
+                <span>Manage Interviews</span>
               </a>
             </li>
             <li class="nav-item">
               <a
-                routerLink="/tl-dashboard/settings"
+                routerLink="/hr-dashboard/settings"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
                 class="nav-link"
@@ -181,21 +112,21 @@
         <!-- Header -->
         <header class="header">
           <div class="welcome-section">
-            <h1 id="welcomeMessage">Welcome Back, Sarah!</h1>
-            <p>Lead your team to success and manage projects efficiently</p>
+            <h1 id="welcomeMessage">Welcome Back, Maya!</h1>
+            <p>Streamline recruitment and build exceptional teams</p>
           </div>
          
-          <div class="header-actions">
+          <!-- <div class="header-actions">
             <div class="search-box">
               <input type="text" placeholder="Search projects, team members..." id="globalSearch" />
               <i class="fas fa-search"></i>
-            </div>
+            </div> -->
 
             <div class="notification-btn" onclick="toggleNotifications()">
               <i class="fas fa-bell"></i>
               <span class="notification-badge">3</span>
             </div>
-          </div>
+          <!-- </div> -->
         </header>
 
         <section class="content-area">

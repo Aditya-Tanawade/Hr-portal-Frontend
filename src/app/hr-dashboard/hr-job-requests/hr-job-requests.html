@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Project Manager Job Requests</title>
+
+<!-- FontAwesome for icons -->
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+/>
+
+<style>
+    /* Basic Reset */
+    * {
+        margin: 0; padding: 0; box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+        background: #f0f2f5;
+        padding: 30px;
+        color: #333;
+    }
+
+    /* Container */
+    .pm-job-requests-container {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    /* Header */
+    .header-section {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+    .header-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 8px;
+        font-weight: 700;
+        color: #2c3e50;
+    }
+    .header-section p {
+        font-size: 1.15rem;
+        color: #7f8c8d;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin: 25px 0 40px;
+    }
+    .stat-item {
+        background: white;
+        padding: 20px 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 15px rgba(0,0,0,0.07);
+        flex: 1;
+        text-align: center;
+        transition: transform 0.3s ease;
+        cursor: default;
+    }
+    .stat-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    }
+    .stat-number {
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: #3498db;
+        margin-bottom: 6px;
+    }
+    .stat-label {
+        font-size: 1rem;
+        color: #34495e;
+    }
+
+    /* Filter Buttons */
+    .filter-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+    .filter-btn {
+        background: #ecf0f1;
+        border: none;
+        padding: 12px 25px;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.25s ease;
+        color: #34495e;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    .filter-btn:hover, .filter-btn.active {
+        background-color: #3498db;
+        color: white;
+        box-shadow: 0 8px 15px rgba(52,152,219,0.4);
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill,minmax(350px,1fr));
+        gap: 25px;
+    }
+    .card {
+        background: white;
+        border-radius: 14px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: box-shadow 0.3s ease;
+    }
+    .card:hover {
+        box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+    }
+    .card-header {
+        background: #3498db;
+        color: white;
+        padding: 20px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top-left-radius: 14px;
+        border-top-right-radius: 14px;
+    }
+    .card-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+    }
+    .card-subtitle {
+        font-size: 0.95rem;
+        opacity: 0.85;
+        margin-top: 5px;
+        font-weight: 500;
+    }
+    .status-badge {
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        user-select: none;
+    }
+    /* Status Colors */
+    .status-incoming {
+        background-color: #2980b9;
+        box-shadow: 0 0 8px rgba(41, 128, 185, 0.7);
+    }
+    .status-assigned {
+        background-color: #27ae60;
+        box-shadow: 0 0 8px rgba(39, 174, 96, 0.7);
+    }
+    .status-forwarded {
+        background-color: #f39c12;
+        box-shadow: 0 0 8px rgba(243, 156, 18, 0.7);
+    }
+    .status-declined {
+        background-color: #c0392b;
+        box-shadow: 0 0 8px rgba(192, 57, 43, 0.7);
+    }
+
+    .card-content {
+        padding: 20px 25px;
+        flex-grow: 1;
+    }
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 7px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 0.95rem;
+    }
+    .info-label {
+        font-weight: 600;
+        color: #34495e;
+    }
+    .info-value {
+        color: #7f8c8d;
+        max-width: 55%;
+        text-align: right;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Card Actions */
+    .card-actions {
+        padding: 15px 25px;
+        background: #f7f9fc;
+        border-bottom-left-radius: 14px;
+        border-bottom-right-radius: 14px;
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+    }
+    .btn {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background-color 0.3s ease;
+        user-select: none;
+    }
+    .btn i {
+        font-size: 1.1rem;
+    }
+
+    /* Action button colors */
+    .btn-check-bench {
+        background-color: #2980b9;
+        color: white;
+    }
+    .btn-check-bench:hover {
+        background-color: #1c5980;
+    }
+    .btn-forward-hr {
+        background-color: #f39c12;
+        color: white;
+    }
+    .btn-forward-hr:hover {
+        background-color: #b0720d;
+    }
+    .btn-terminate {
+        background-color: #c0392b;
+        color: white;
+    }
+    .btn-terminate:hover {
+        background-color: #7a1a17;
+    }
+
+</style>
+</head>
+<body>
+<div class="pm-job-requests-container">
+    <!-- Header Section -->
+    <section class="header-section">
+        <h1>Project Manager Job Requests</h1>
+        <p>Manage all your allocated job requests efficiently</p>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-number">12</div>
+            <div class="stat-label">Incoming Job Requests</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Posted On Job Portal</div>
+        </div>
+        <!-- <div class="stat-item">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Forwarded To HR</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">2</div>
+            <div class="stat-label">Declined</div>
+        </div> -->
+    </section>
+
+    <!-- Filter Buttons -->
+    <section class="filter-buttons">
+        <button class="filter-btn active" onclick="filterRequests('all')">All</button>
+        <button class="filter-btn" onclick="filterRequests('assigned')">Posted On Portal</button>
+        <!-- <button class="filter-btn" onclick="filterRequests('forwarded')">Forwarded To HR</button>
+        <button class="filter-btn" onclick="filterRequests('declined')">Declined</button> -->
+    </section>
+
+    <!-- Job Requests Cards -->
+    <section class="cards-grid" id="jobRequestsGrid">
+        <!-- Sample card -->
+        <div class="card" data-status="incoming">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">React Developer Needed</div>
+                    <div class="card-subtitle">JR101 • Project Alpha</div>
+                </div>
+                <span class="status-badge status-incoming">Incoming</span>
+            </div>
+            <div class="card-content">
+                <div class="info-row">
+                    <span class="info-label">Title:</span>
+                    <span class="info-value">React Developer</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Skills:</span>
+                    <span class="info-value">React, JavaScript, Redux</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Experience:</span>
+                    <span class="info-value">3 - 5 years</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Min CTC:</span>
+                    <span class="info-value">$60,000</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Max CTC:</span>
+                    <span class="info-value">$80,000</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Headcount:</span>
+                    <span class="info-value">2</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-success btn-sm" onclick="postJobFromRequest('JR001')">
+                            <i class="fas fa-upload"></i> Post Job
+                        </button>
+
+                        <button class="btn btn-outline btn-sm">
+                            <i class="fas fa-eye"></i> Details
+                        </button>
+            </div>
+        </div>
+
+        <div class="card" data-status="assigned">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Backend Engineer</div>
+                    <div class="card-subtitle">JR102 • Project Beta</div>
+                </div>
+                <span class="status-badge status-assigned">Assigned To Bench</span>
+            </div>
+            <div class="card-content">
+                <div class="info-row">
+                    <span class="info-label">Title:</span>
+                    <span class="info-value">Backend Engineer</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Skills:</span>
+                    <span class="info-value">Java, Spring Boot, MySQL</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Experience:</span>
+                    <span class="info-value">5+ years</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Min CTC:</span>
+                    <span class="info-value">$70,000</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Max CTC:</span>
+                    <span class="info-value">$90,000</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Headcount:</span>
+                    <span class="info-value">1</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-success btn-sm" onclick="postJobFromRequest('JR001')">
+                            <i class="fas fa-upload"></i> Post Job
+                        </button>
+
+                        <button class="btn btn-outline btn-sm">
+                            <i class="fas fa-eye"></i> Details
+                        </button>
+            </div>
+        </div>
+
+        <div class="card" data-status="forwarded">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">UI/UX Designer</div>
+                    <div class="card-subtitle">JR103 • Project Gamma</div>
+                </div>
+                <span class="status-badge status-forwarded">Forwarded To HR</span>
+            </div>
+            <div class="card-content">
+                <div class="info-row">
+                    <span class="info-label">Title:</span>
+                    <span class="info-value">UI/UX Designer</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Skills:</span>
+                    <span class="info-value">Figma, Adobe XD, Prototyping</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Experience:</span>
+                    <span class="info-value">2+ years</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Min CTC:</span>
+                    <span class="info-value">$50,000</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Max CTC:</span>
+                    <span class="info-value">$65,000</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Headcount:</span>
+                    <span class="info-value">1</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-success btn-sm" onclick="postJobFromRequest('JR001')">
+                            <i class="fas fa-upload"></i> Post Job
+                        </button>
+
+                        <button class="btn btn-outline btn-sm">
+                            <i class="fas fa-eye"></i> Details
+                        </button>
+            </div>
+        </div>
+
+        <div class="card" data-status="declined">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">QA Tester</div>
+                    <div class="card-subtitle">JR104 • Project Delta</div>
+                </div>
+                <span class="status-badge status-declined">Declined</span>
+            </div>
+            <div class="card-content">
+                <div class="info-row">
+                    <span class="info-label">Title:</span>
+                    <span class="info-value">QA Tester</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Skills:</span>
+                    <span class="info-value">Selenium, JIRA, Manual Testing</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Experience:</span>
+                    <span class="info-value">3+ years</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Min CTC:</span>
+                    <span class="info-value">$45,000</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Max CTC:</span>
+                    <span class="info-value">$55,000</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Headcount:</span>
+                    <span class="info-value">1</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <!-- <button class="btn btn-check-bench" onclick="checkBench('JR104')"><i class="fas fa-check-circle"></i> Check Bench First</button>
+                <button class="btn btn-forward-hr" onclick="forwardToHR('JR104')"><i class="fas fa-paper-plane"></i> Forward To HR</button>
+                <button class="btn btn-terminate" onclick="terminateRequest('JR104')"><i class="fas fa-times-circle"></i> Terminate</button> -->
+
+                <button class="btn btn-success btn-sm" onclick="postJobFromRequest('JR001')">
+                            <i class="fas fa-upload"></i> Post Job
+                        </button>
+
+                        <button class="btn btn-outline btn-sm">
+                            <i class="fas fa-eye"></i> Details
+                        </button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    // Filter functionality
+    function filterRequests(status) {
+        const allCards = document.querySelectorAll('#jobRequestsGrid .card');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+
+        // Set active button
+        if (status === 'all') {
+            document.querySelector('.filter-btn:nth-child(1)').classList.add('active');
+        } else if (status === 'assigned') {
+            document.querySelector('.filter-btn:nth-child(2)').classList.add('active');
+        } else if (status === 'forwarded') {
+            document.querySelector('.filter-btn:nth-child(3)').classList.add('active');
+        } else if (status === 'declined') {
+            document.querySelector('.filter-btn:nth-child(4)').classList.add('active');
+        }
+
+        allCards.forEach(card => {
+            if (status === 'all') {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = (card.dataset.status === status) ? 'flex' : 'none';
+            }
+        });
+    }
+
+    // Dummy actions for buttons
+    function checkBench(id) {
+        alert(`Checking bench for Job Request: ${id}`);
+    }
+    function forwardToHR(id) {
+        alert(`Forwarding Job Request: ${id} to HR`);
+    }
+    function terminateRequest(id) {
+        if (confirm(`Are you sure you want to terminate Job Request: ${id}?`)) {
+            alert(`Job Request: ${id} terminated.`);
+            // You can add logic to remove or update the UI here.
+        }
+    }
+</script>
+</body>
+</html>
