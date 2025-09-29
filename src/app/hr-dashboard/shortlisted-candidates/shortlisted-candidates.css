@@ -1,0 +1,291 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and Container */
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: 100vh;
+    padding: 20px;
+    overflow: auto;
+}
+
+.applications-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+/* Header Section */
+.applications-header {
+    background: linear-gradient(135deg, #1e2a95 0%, #3b4bd8 100%);
+    color: white;
+    padding: 40px;
+    position: relative;
+    border-radius: 20px;
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    background: linear-gradient(45deg, #fff, #e2e8f0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 30px;
+}
+
+/* Stats Section */
+.applications-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px;
+    color: white;
+    position: relative;
+    background: linear-gradient(135deg, #4e73df, #1e2a95);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Different colors */
+.stats-total {
+    background: linear-gradient(135deg, #4e73df, #1e2a95);
+}
+.stats-approved {
+    background: linear-gradient(135deg, #28a745, #218838);
+}
+.stats-declined {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+}
+.stats-pending {
+    background: linear-gradient(135deg, #ffc107, #e0a800);
+}
+
+.stat-number {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.stat-item:hover .stat-label {
+    opacity: 1;
+}
+
+/* Filter Buttons */
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0 40px;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #fff;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    color: #3498db;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background-color: #3498db;
+    color: #fff;
+}
+
+/* Candidate Cards Section */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* exactly 2 cards per row */
+    gap: 30px;
+    padding-bottom: 20px;
+}
+
+
+.candidate-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    
+}
+
+.candidate-card:hover {
+    transform: translateY(-10px);
+}
+
+.candidate-profile {
+    display: flex;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #f0f0f0;
+    position: relative; /* FIX for badge alignment */
+}
+
+.candidate-avatar {
+    width: 60px;
+    height: 60px;
+    background-color: #3498db;
+    color: #fff;
+    font-size: 1.5rem;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.candidate-info h4 {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.candidate-info p {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.skills-tags {
+    margin-top: 10px;
+}
+
+.skill-tag {
+    background-color: #ecf0f1;
+    color: #3498db;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-right: 5px;
+    font-size: 0.8rem;
+}
+
+/* FIXED Badge Position */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: #fff;
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.status-badge-shortlisted {
+    background-color: #2ecc71;
+}
+.status-badge-interview-round1 {
+    background-color: #f39c12;
+}
+.status-badge-applied {
+    background-color: #3498db;
+}
+
+/* Card Content */
+.card-content {
+    padding: 20px;
+}
+
+.info-row {
+    margin-bottom: 10px;
+}
+
+.info-label {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.info-value {
+    font-size: 1rem;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Card Actions */
+.card-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.card-actions .btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.card-actions .btn-sm {
+    padding: 6px 12px;
+}
+
+.card-actions .btn-success {
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+}
+.card-actions .btn-success:hover {
+    background-color: #27ae60;
+}
+
+.card-actions .btn-outline {
+    background-color: transparent;
+    border: 2px solid #3498db;
+    color: #3498db;
+}
+.card-actions .btn-outline:hover {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.card-actions .btn-danger {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+}
+.card-actions .btn-danger:hover {
+    background-color: #c0392b;
+}
