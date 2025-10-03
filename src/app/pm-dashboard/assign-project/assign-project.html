@@ -1,51 +1,226 @@
-<div id="assign-project-form" class="form-container">
-    <div class="form-header">
-        <h2>Assign Project</h2>
-        <p>Fill in the details to assign the project</p>
+<div class="container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <!-- No Project Assigned - Show Empty State -->
+  <div *ngIf="!isLoading && !assignedProject" class="empty-state">
+    <div class="empty-icon">
+      <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+      </svg>
     </div>
-    <form id="assignProjectForm">
+    <h2>No Project Assigned</h2>
+    <p>You haven't assigned any project yet. Click below to assign your first project.</p>
+    <button class="btn-primary" (click)="openModal()">
+      Assign Project
+    </button>
+  </div>
+
+  <!-- Project Already Assigned - Show Details -->
+  <div *ngIf="!isLoading && assignedProject" class="assigned-state">
+    <div class="card">
+      <div class="card-header">
+        <h2>Assigned Project</h2>
+        <span class="status-badge" [ngClass]="getStatusBadgeClass(assignedProject.status)">
+          {{ formatStatus(assignedProject.status) }}
+        </span>
+      </div>
+
+      <div class="card-content">
+
+                <div class="info-row">
+          <div class="info-group">
+          <label>Project ID</label>
+          <p>#{{ assignedProject.projectId }}</p>
+        </div>
+
+        <div class="info-group">
+          <label>Project Name</label>
+          <p>{{ assignedProject.name }}</p>
+        </div>
+        </div>
+
+      
+
+        <div class="info-row">
+
+          <div class="info-group">
+            <label>Lead ID</label>
+            <p>{{ assignedProject.teamLeadId }}</p>
+          </div>
+
+          <div class="info-group">
+            <label>Team Lead</label>
+            <p>{{ assignedProject.teamLeadName }}</p>
+          </div>
+          
+        </div>
+
+        <div class="info-group">
+          <label>Budget Range</label>
+          <p class="budget">₹{{ assignedProject.budgetBandMin }}L - ₹{{ assignedProject.budgetBandMax }}L</p>
+        </div>
+
+        <div class="info-row">
+          <div class="info-group">
+            <label>Start Date</label>
+            <p>{{assignedProject.startDate }}</p>
+          </div>
+          <div class="info-group">
+            <label>End Date</label>
+            <p>{{ assignedProject.endDate }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <p class="note">You have already assigned a project. Only one project can be assigned at a time.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Assign Project Form -->
+  <div class="modal" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closeModal()">&times;</button>
+      
+      <h2>Assign Project</h2>
+      <p class="subtitle">Fill in the details to assign a project to a team lead</p>
+
+      <form #assignForm="ngForm" (ngSubmit)="onSubmit($event)">
         <div class="form-group">
-            <label for="projectName">Project Name</label>
-            <input type="text" id="projectName" name="projectName" placeholder="Enter Project Name" required>
+          <label>Project Name <span class="required">*</span></label>
+          <input
+            type="text"
+            name="name"
+            [(ngModel)]="projectRequest.name"
+            placeholder="Enter project name"
+            required
+            #projectName="ngModel"
+          />
+          <span class="error" *ngIf="projectName.invalid && projectName.touched">
+            Project name is required
+          </span>
         </div>
 
         <div class="form-group">
-            <label for="projectStatus">Project Status</label>
-            <select id="projectStatus" name="projectStatus" required>
-                <option value="READY_FOR_ASSIGNMENT">Ready for Assignment</option>
-                <option value="IN_PROGRESS">In Progress</option>
-                <option value="COMPLETED">Completed</option>
-            </select>
+          <label>Status <span class="required">*</span></label>
+          <select 
+            name="status" 
+            [(ngModel)]="projectRequest.status" 
+            required
+          >
+            <option value="PENDING">PENDING</option>
+            <option value="ACTIVE">ACTIVE</option>
+            <option value="ONHOLD">ONHOLD</option>
+            <option value="CLOSED">CLOSED</option>
+
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Min Budget (₹ Lakhs) <span class="required">*</span></label>
+            <input
+              type="number"
+              name="budgetBandMin"
+              [(ngModel)]="projectRequest.budgetBandMin"
+              placeholder="20"
+              min="20"
+              max="100"
+              step="0.01"
+              required
+              #budgetMin="ngModel"
+            />
+            <span class="error" *ngIf="budgetMin.invalid && budgetMin.touched">
+              Between 20-100 Lakhs
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label>Max Budget (₹ Lakhs) <span class="required">*</span></label>
+            <input
+              type="number"
+              name="budgetBandMax"
+              [(ngModel)]="projectRequest.budgetBandMax"
+              placeholder="100"
+              min="20"
+              max="100"
+              step="0.01"
+              required
+              #budgetMax="ngModel"
+            />
+            <span class="error" *ngIf="budgetMax.invalid && budgetMax.touched">
+              Between 20-100 Lakhs
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Start Date <span class="required">*</span></label>
+            <input 
+              type="date" 
+              name="startDate" 
+              [(ngModel)]="projectRequest.startDate" 
+              required
+              #startDate="ngModel"
+            />
+            <span class="error" *ngIf="startDate.invalid && startDate.touched">
+              Required
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label>End Date <span class="required">*</span></label>
+            <input 
+              type="date" 
+              name="endDate" 
+              [(ngModel)]="projectRequest.endDate" 
+              required
+              #endDate="ngModel"
+            />
+            <span class="error" *ngIf="endDate.invalid && endDate.touched">
+              Required
+            </span>
+          </div>
         </div>
 
         <div class="form-group">
-            <label for="budgetMin">Budget Min (in Lakhs)</label>
-            <input type="number" id="budgetMin" name="budgetMin" placeholder="Enter Budget Min" min="20" max="100" step="0.01" required>
-        </div>
-
-        <div class="form-group">
-            <label for="budgetMax">Budget Max (in Lakhs)</label>
-            <input type="number" id="budgetMax" name="budgetMax" placeholder="Enter Budget Max" min="20" max="100" step="0.01" required>
-        </div>
-
-        <div class="form-group">
-            <label for="startDate">Project Start Date</label>
-            <input type="date" id="startDate" name="startDate" required>
-        </div>
-
-        <div class="form-group">
-            <label for="endDate">Project End Date</label>
-            <input type="date" id="endDate" name="endDate" required>
-        </div>
-
-        <div class="form-group">
-            <label for="teamLeadId">Team Lead ID</label>
-            <input type="text" id="teamLeadId" name="teamLeadId" placeholder="Enter Team Lead ID" required>
+          <label>Team Lead <span class="required">*</span></label>
+          <select
+            name="teamLeadId"
+            [(ngModel)]="projectRequest.teamLeadId"
+            required
+            #teamLeadId="ngModel"
+          >
+            <option value="" disabled selected>Select a team lead</option>
+            <option *ngFor="let id of teamleadIds" [value]="id">{{ id }}</option>
+          </select>
+          <span class="error" *ngIf="teamLeadId.invalid && teamLeadId.touched">
+            Please select a team lead
+          </span>
+          <span class="info" *ngIf="teamleadIds.length === 0">
+            Loading team leads...
+          </span>
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn btn-submit">Assign Project</button>
-            <button type="button" class="btn btn-cancel" onclick="resetForm()">Cancel</button>
+          <button 
+            type="submit" 
+            class="btn-submit"
+            [disabled]="assignForm.invalid || teamleadIds.length === 0"
+          >
+            Assign Project
+          </button>
+          <button type="button" class="btn-cancel" (click)="closeModal()">
+            Cancel
+          </button>
         </div>
-    </form>
+      </form>
+    </div>
+  </div>
 </div>

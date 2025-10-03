@@ -1,264 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Project Manager Job Requests</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Project Manager Job Requests</title>
 
-<!-- FontAwesome for icons -->
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-/>
-</head>
-<body>
-<div class="pm-job-requests-container">
-    <!-- Header Section -->
-    <section class="header-section">
+    <!-- FontAwesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="pm-job-requests-container">
+      <!-- Header Section -->
+      <section class="header-section">
         <h1>Project Manager Job Requests</h1>
         <p>Manage all your allocated job requests efficiently</p>
-    </section>
+      </section>
 
-    <!-- Stats Section -->
-    <section class="stats-grid">
+      <!-- Stats Section -->
+      <section class="stats-grid">
         <div class="stat-item">
-            <div class="stat-number">12</div>
-            <div class="stat-label">Incoming Job Requests</div>
+          <div class="stat-number">12</div>
+          <div class="stat-label">Incoming Job Requests</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">5</div>
-            <div class="stat-label">Assigned To Bench</div>
+          <div class="stat-number">5</div>
+          <div class="stat-label">Assigned To Bench</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">3</div>
-            <div class="stat-label">Forwarded To HR</div>
+          <div class="stat-number">3</div>
+          <div class="stat-label">Forwarded To HR</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">2</div>
-            <div class="stat-label">Declined</div>
+          <div class="stat-number">2</div>
+          <div class="stat-label">Declined</div>
         </div>
-    </section>
+      </section>
 
-    <!-- Filter Buttons -->
-    <section class="filter-buttons">
+      <!-- Filter Buttons -->
+      <section class="filter-buttons">
         <button class="filter-btn active" onclick="filterRequests('all')">All</button>
         <button class="filter-btn" onclick="filterRequests('assigned')">Assigned To Bench</button>
         <button class="filter-btn" onclick="filterRequests('forwarded')">Forwarded To HR</button>
         <button class="filter-btn" onclick="filterRequests('declined')">Declined</button>
-    </section>
+      </section>
 
-    <!-- Job Requests Cards -->
-    <section class="cards-grid" id="jobRequestsGrid">
+      <!-- Job Requests Cards -->
+      <section class="cards-grid" id="jobRequestsGrid">
         <!-- Sample card -->
         <div class="card" data-status="incoming">
-            <div class="card-header">
-                <div>
-                    <div class="card-title">React Developer Needed</div>
-                    <div class="card-subtitle">JR101 • Project Alpha</div>
-                </div>
-                <span class="status-badge status-incoming">Incoming</span>
+          <div class="card-header">
+            <div>
+              <div class="card-title">React Developer Needed</div>
+              <div class="card-subtitle">JR101 • Project Alpha</div>
             </div>
-            <div class="card-content">
-                <div class="info-row">
-                    <span class="info-label">Title:</span>
-                    <span class="info-value">React Developer</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Skills:</span>
-                    <span class="info-value">React, JavaScript, Redux</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Experience:</span>
-                    <span class="info-value">3 - 5 years</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Min CTC:</span>
-                    <span class="info-value">$60,000</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Max CTC:</span>
-                    <span class="info-value">$80,000</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Headcount:</span>
-                    <span class="info-value">2</span>
-                </div>
+            <span class="status-badge status-incoming">Incoming</span>
+          </div>
+          <div class="card-content">
+            <div class="info-row">
+              <span class="info-label">Title:</span>
+              <span class="info-value">React Developer</span>
             </div>
-            <div class="card-actions">
-                <button class="btn btn-check-bench" onclick="checkBench('JR101')"><i class="fas fa-check-circle"></i> Check Bench First</button>
-                <button class="btn btn-forward-hr" onclick="forwardToHR('JR101')"><i class="fas fa-paper-plane"></i> Forward To HR</button>
-                <button class="btn btn-terminate" onclick="terminateRequest('JR101')"><i class="fas fa-times-circle"></i> Terminate</button>
+            <div class="info-row">
+              <span class="info-label">Skills:</span>
+              <span class="info-value">React, JavaScript, Redux</span>
             </div>
+            <div class="info-row">
+              <span class="info-label">Experience:</span>
+              <span class="info-value">3 - 5 years</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Min CTC:</span>
+              <span class="info-value">$60,000</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Max CTC:</span>
+              <span class="info-value">$80,000</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Headcount:</span>
+              <span class="info-value">2</span>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button
+              class="btn btn-check-bench"
+              routerLink="/pm-dashboard/bench-employees"
+              aria-label="Check Bench First"
+            >
+              <i class="fas fa-check-circle"></i> Check Bench First
+            </button>
+
+            <button class="btn btn-forward-hr" onclick="forwardToHR('JR101')">
+              <i class="fas fa-paper-plane"></i> Forward To HR
+            </button>
+            <button class="btn btn-terminate" onclick="terminateRequest('JR101')">
+              <i class="fas fa-times-circle"></i> Terminate
+            </button>
+          </div>
         </div>
 
         <div class="card" data-status="assigned">
-            <div class="card-header">
-                <div>
-                    <div class="card-title">Backend Engineer</div>
-                    <div class="card-subtitle">JR102 • Project Beta</div>
-                </div>
-                <span class="status-badge status-assigned">Assigned To Bench</span>
+          <div class="card-header">
+            <div>
+              <div class="card-title">Backend Engineer</div>
+              <div class="card-subtitle">JR102 • Project Beta</div>
             </div>
-            <div class="card-content">
-                <div class="info-row">
-                    <span class="info-label">Title:</span>
-                    <span class="info-value">Backend Engineer</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Skills:</span>
-                    <span class="info-value">Java, Spring Boot, MySQL</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Experience:</span>
-                    <span class="info-value">5+ years</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Min CTC:</span>
-                    <span class="info-value">$70,000</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Max CTC:</span>
-                    <span class="info-value">$90,000</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Headcount:</span>
-                    <span class="info-value">1</span>
-                </div>
+            <span class="status-badge status-assigned">Assigned To Bench</span>
+          </div>
+          <div class="card-content">
+            <div class="info-row">
+              <span class="info-label">Title:</span>
+              <span class="info-value">Backend Engineer</span>
             </div>
-            <div class="card-actions">
-                <button class="btn btn-check-bench" onclick="checkBench('JR102')"><i class="fas fa-check-circle"></i> Check Bench First</button>
-                <button class="btn btn-forward-hr" onclick="forwardToHR('JR102')"><i class="fas fa-paper-plane"></i> Forward To HR</button>
-                <button class="btn btn-terminate" onclick="terminateRequest('JR102')"><i class="fas fa-times-circle"></i> Terminate</button>
+            <div class="info-row">
+              <span class="info-label">Skills:</span>
+              <span class="info-value">Java, Spring Boot, MySQL</span>
             </div>
+            <div class="info-row">
+              <span class="info-label">Experience:</span>
+              <span class="info-value">5+ years</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Min CTC:</span>
+              <span class="info-value">$70,000</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Max CTC:</span>
+              <span class="info-value">$90,000</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Headcount:</span>
+              <span class="info-value">1</span>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-check-bench" onclick="checkBench('JR102')">
+              <i class="fas fa-check-circle"></i> Check Bench First
+            </button>
+            <button class="btn btn-forward-hr" onclick="forwardToHR('JR102')">
+              <i class="fas fa-paper-plane"></i> Forward To HR
+            </button>
+            <button class="btn btn-terminate" onclick="terminateRequest('JR102')">
+              <i class="fas fa-times-circle"></i> Terminate
+            </button>
+          </div>
         </div>
 
         <div class="card" data-status="forwarded">
-            <div class="card-header">
-                <div>
-                    <div class="card-title">UI/UX Designer</div>
-                    <div class="card-subtitle">JR103 • Project Gamma</div>
-                </div>
-                <span class="status-badge status-forwarded">Forwarded To HR</span>
+          <div class="card-header">
+            <div>
+              <div class="card-title">UI/UX Designer</div>
+              <div class="card-subtitle">JR103 • Project Gamma</div>
             </div>
-            <div class="card-content">
-                <div class="info-row">
-                    <span class="info-label">Title:</span>
-                    <span class="info-value">UI/UX Designer</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Skills:</span>
-                    <span class="info-value">Figma, Adobe XD, Prototyping</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Experience:</span>
-                    <span class="info-value">2+ years</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Min CTC:</span>
-                    <span class="info-value">$50,000</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Max CTC:</span>
-                    <span class="info-value">$65,000</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Headcount:</span>
-                    <span class="info-value">1</span>
-                </div>
+            <span class="status-badge status-forwarded">Forwarded To HR</span>
+          </div>
+          <div class="card-content">
+            <div class="info-row">
+              <span class="info-label">Title:</span>
+              <span class="info-value">UI/UX Designer</span>
             </div>
-            <div class="card-actions">
-                <button class="btn btn-check-bench" onclick="checkBench('JR103')"><i class="fas fa-check-circle"></i> Check Bench First</button>
-                <button class="btn btn-forward-hr" onclick="forwardToHR('JR103')"><i class="fas fa-paper-plane"></i> Forward To HR</button>
-                <button class="btn btn-terminate" onclick="terminateRequest('JR103')"><i class="fas fa-times-circle"></i> Terminate</button>
+            <div class="info-row">
+              <span class="info-label">Skills:</span>
+              <span class="info-value">Figma, Adobe XD, Prototyping</span>
             </div>
+            <div class="info-row">
+              <span class="info-label">Experience:</span>
+              <span class="info-value">2+ years</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Min CTC:</span>
+              <span class="info-value">$50,000</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Max CTC:</span>
+              <span class="info-value">$65,000</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Headcount:</span>
+              <span class="info-value">1</span>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-check-bench" onclick="checkBench('JR103')">
+              <i class="fas fa-check-circle"></i> Check Bench First
+            </button>
+            <button class="btn btn-forward-hr" onclick="forwardToHR('JR103')">
+              <i class="fas fa-paper-plane"></i> Forward To HR
+            </button>
+            <button class="btn btn-terminate" onclick="terminateRequest('JR103')">
+              <i class="fas fa-times-circle"></i> Terminate
+            </button>
+          </div>
         </div>
 
         <div class="card" data-status="declined">
-            <div class="card-header">
-                <div>
-                    <div class="card-title">QA Tester</div>
-                    <div class="card-subtitle">JR104 • Project Delta</div>
-                </div>
-                <span class="status-badge status-declined">Declined</span>
+          <div class="card-header">
+            <div>
+              <div class="card-title">QA Tester</div>
+              <div class="card-subtitle">JR104 • Project Delta</div>
             </div>
-            <div class="card-content">
-                <div class="info-row">
-                    <span class="info-label">Title:</span>
-                    <span class="info-value">QA Tester</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Skills:</span>
-                    <span class="info-value">Selenium, JIRA, Manual Testing</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Experience:</span>
-                    <span class="info-value">3+ years</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Min CTC:</span>
-                    <span class="info-value">$45,000</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Max CTC:</span>
-                    <span class="info-value">$55,000</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Headcount:</span>
-                    <span class="info-value">1</span>
-                </div>
+            <span class="status-badge status-declined">Declined</span>
+          </div>
+          <div class="card-content">
+            <div class="info-row">
+              <span class="info-label">Title:</span>
+              <span class="info-value">QA Tester</span>
             </div>
-            <div class="card-actions">
-                <button class="btn btn-check-bench" onclick="checkBench('JR104')"><i class="fas fa-check-circle"></i> Check Bench First</button>
-                <button class="btn btn-forward-hr" onclick="forwardToHR('JR104')"><i class="fas fa-paper-plane"></i> Forward To HR</button>
-                <button class="btn btn-terminate" onclick="terminateRequest('JR104')"><i class="fas fa-times-circle"></i> Terminate</button>
+            <div class="info-row">
+              <span class="info-label">Skills:</span>
+              <span class="info-value">Selenium, JIRA, Manual Testing</span>
             </div>
+            <div class="info-row">
+              <span class="info-label">Experience:</span>
+              <span class="info-value">3+ years</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Min CTC:</span>
+              <span class="info-value">$45,000</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Max CTC:</span>
+              <span class="info-value">$55,000</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Headcount:</span>
+              <span class="info-value">1</span>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-check-bench" onclick="checkBench('JR104')">
+              <i class="fas fa-check-circle"></i> Check Bench First
+            </button>
+            <button class="btn btn-forward-hr" onclick="forwardToHR('JR104')">
+              <i class="fas fa-paper-plane"></i> Forward To HR
+            </button>
+            <button class="btn btn-terminate" onclick="terminateRequest('JR104')">
+              <i class="fas fa-times-circle"></i> Terminate
+            </button>
+          </div>
         </div>
-    </section>
-</div>
+      </section>
+    </div>
 
-<script>
-    // Filter functionality
-    function filterRequests(status) {
+    <script>
+      // Filter functionality
+      function filterRequests(status) {
         const allCards = document.querySelectorAll('#jobRequestsGrid .card');
         const filterButtons = document.querySelectorAll('.filter-btn');
 
-        filterButtons.forEach(btn => btn.classList.remove('active'));
+        filterButtons.forEach((btn) => btn.classList.remove('active'));
 
         // Set active button
         if (status === 'all') {
-            document.querySelector('.filter-btn:nth-child(1)').classList.add('active');
+          document.querySelector('.filter-btn:nth-child(1)').classList.add('active');
         } else if (status === 'assigned') {
-            document.querySelector('.filter-btn:nth-child(2)').classList.add('active');
+          document.querySelector('.filter-btn:nth-child(2)').classList.add('active');
         } else if (status === 'forwarded') {
-            document.querySelector('.filter-btn:nth-child(3)').classList.add('active');
+          document.querySelector('.filter-btn:nth-child(3)').classList.add('active');
         } else if (status === 'declined') {
-            document.querySelector('.filter-btn:nth-child(4)').classList.add('active');
+          document.querySelector('.filter-btn:nth-child(4)').classList.add('active');
         }
 
-        allCards.forEach(card => {
-            if (status === 'all') {
-                card.style.display = 'flex';
-            } else {
-                card.style.display = (card.dataset.status === status) ? 'flex' : 'none';
-            }
+        allCards.forEach((card) => {
+          if (status === 'all') {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = card.dataset.status === status ? 'flex' : 'none';
+          }
         });
-    }
+      }
 
-    // Dummy actions for buttons
-    function checkBench(id) {
+      // Dummy actions for buttons
+      function checkBench(id) {
         alert(`Checking bench for Job Request: ${id}`);
-    }
-    function forwardToHR(id) {
+      }
+      function forwardToHR(id) {
         alert(`Forwarding Job Request: ${id} to HR`);
-    }
-    function terminateRequest(id) {
+      }
+      function terminateRequest(id) {
         if (confirm(`Are you sure you want to terminate Job Request: ${id}?`)) {
-            alert(`Job Request: ${id} terminated.`);
-            // You can add logic to remove or update the UI here.
+          alert(`Job Request: ${id} terminated.`);
+          // You can add logic to remove or update the UI here.
         }
-    }
-</script>
-</body>
+      }
+    </script>
+  </body>
 </html>
