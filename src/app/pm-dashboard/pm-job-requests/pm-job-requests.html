@@ -24,270 +24,233 @@
       <!-- Stats Section -->
       <section class="stats-grid">
         <div class="stat-item">
-          <div class="stat-number">12</div>
-          <div class="stat-label">Incoming Job Requests</div>
+          <div class="stat-number">{{ countOfAllJobRequests }}</div>
+          <div class="stat-label">Total Job Requests</div>
         </div>
         <div class="stat-item">
-          <div class="stat-number">5</div>
-          <div class="stat-label">Assigned To Bench</div>
+          <div class="stat-number">{{ countOfPendingJobRequests }}</div>
+          <div class="stat-label">Pending</div>
         </div>
         <div class="stat-item">
-          <div class="stat-number">3</div>
+          <div class="stat-number">{{ countOfApprovedJobRequests }}</div>
           <div class="stat-label">Forwarded To HR</div>
         </div>
         <div class="stat-item">
-          <div class="stat-number">2</div>
+          <div class="stat-number">{{ CountOfClosedJobRequests }}</div>
+          <div class="stat-label">Assigned To Bench</div>
+        </div>
+
+        <div class="stat-item">
+          <div class="stat-number">0</div>
           <div class="stat-label">Declined</div>
         </div>
       </section>
 
       <!-- Filter Buttons -->
       <section class="filter-buttons">
-        <button class="filter-btn active" onclick="filterRequests('all')">All</button>
-        <button class="filter-btn" onclick="filterRequests('assigned')">Assigned To Bench</button>
-        <button class="filter-btn" onclick="filterRequests('forwarded')">Forwarded To HR</button>
-        <button class="filter-btn" onclick="filterRequests('declined')">Declined</button>
+        <button
+          class="filter-btn"
+          [class.active]="selectedFilter === 'all'"
+          (click)="applyFilter('all')"
+        >
+          All
+        </button>
+
+        <button
+          class="filter-btn"
+          [class.active]="selectedFilter === 'pending'"
+          (click)="applyFilter('pending')"
+        >
+          Pending
+        </button>
+
+        <button
+          class="filter-btn"
+          [class.active]="selectedFilter === 'forwarded'"
+          (click)="applyFilter('forwarded')"
+        >
+          Forwarded To HR
+        </button>
+
+        <button
+          class="filter-btn"
+          [class.active]="selectedFilter === 'assigned'"
+          (click)="applyFilter('assigned')"
+        >
+          Assigned To Bench
+        </button>
+
+
+         <button
+          class="filter-btn"
+          [class.active]="selectedFilter === 'declined'"
+          (click)="applyFilter('declined')"
+        >
+        Declined
+        </button>
+
       </section>
 
       <!-- Job Requests Cards -->
       <section class="cards-grid" id="jobRequestsGrid">
-        <!-- Sample card -->
+        @for (item of filteredJobRequests; track item.jobRequestId ) {
         <div class="card" data-status="incoming">
           <div class="card-header">
             <div>
-              <div class="card-title">React Developer Needed</div>
-              <div class="card-subtitle">JR101 • Project Alpha</div>
+              <div class="card-title">{{ item.title }}</div>
+              <div class="card-subtitle">{{ item.jobRequestId }}</div>
             </div>
-            <span class="status-badge status-incoming">Incoming</span>
+            <span class="status-badge" [ngClass]="getStatusClass(item.status)">
+              {{ getStatusLabel(item.status) }}</span
+            >
           </div>
           <div class="card-content">
             <div class="info-row">
-              <span class="info-label">Title:</span>
-              <span class="info-value">React Developer</span>
+              <span class="info-label">Description:</span>
+              <span class="info-value">{{ item.description }}</span>
             </div>
             <div class="info-row">
               <span class="info-label">Skills:</span>
-              <span class="info-value">React, JavaScript, Redux</span>
+              <span class="info-value">{{ item.skills }}</span>
             </div>
             <div class="info-row">
               <span class="info-label">Experience:</span>
-              <span class="info-value">3 - 5 years</span>
+              <span class="info-value"
+                >{{ item.minExperience }} - {{ item.maxExperience }} years</span
+              >
             </div>
             <div class="info-row">
-              <span class="info-label">Min CTC:</span>
-              <span class="info-value">$60,000</span>
+              <span class="info-label">CTC:</span>
+              <span class="info-value">{{ item.minCtc }} - {{ item.maxCtc }} Lp</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Max CTC:</span>
-              <span class="info-value">$80,000</span>
+              <span class="info-label">Priority:</span>
+              <span class="info-value" [ngClass]="getPriorityClass(item.priority)">
+                {{ item.priority }}
+              </span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Job Type:</span>
+              <span class="info-value">{{ item.jobType }}</span>
             </div>
             <div class="info-row">
               <span class="info-label">Headcount:</span>
-              <span class="info-value">2</span>
+              <span class="info-value">{{ item.headCount }}</span>
             </div>
           </div>
-          <div class="card-actions">
+          <div class="card-actions" *ngIf="item.status === 'SUBMITTED'">
             <button
               class="btn btn-check-bench"
-              routerLink="/pm-dashboard/bench-employees"
+              [routerLink]="['/pm-dashboard/bench-employees']"
+              [queryParams]="{ jobRequestId: item.jobRequestId, projectId: item.projectId }"
               aria-label="Check Bench First"
             >
               <i class="fas fa-check-circle"></i> Check Bench First
             </button>
 
-            <button class="btn btn-forward-hr" onclick="forwardToHR('JR101')">
+            <button class="btn btn-forward-hr" (click)="openForwardToHRForm(item.jobRequestId)">
               <i class="fas fa-paper-plane"></i> Forward To HR
             </button>
-            <button class="btn btn-terminate" onclick="terminateRequest('JR101')">
-              <i class="fas fa-times-circle"></i> Terminate
-            </button>
-          </div>
-        </div>
 
-        <div class="card" data-status="assigned">
-          <div class="card-header">
-            <div>
-              <div class="card-title">Backend Engineer</div>
-              <div class="card-subtitle">JR102 • Project Beta</div>
-            </div>
-            <span class="status-badge status-assigned">Assigned To Bench</span>
-          </div>
-          <div class="card-content">
-            <div class="info-row">
-              <span class="info-label">Title:</span>
-              <span class="info-value">Backend Engineer</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Skills:</span>
-              <span class="info-value">Java, Spring Boot, MySQL</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Experience:</span>
-              <span class="info-value">5+ years</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Min CTC:</span>
-              <span class="info-value">$70,000</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Max CTC:</span>
-              <span class="info-value">$90,000</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Headcount:</span>
-              <span class="info-value">1</span>
-            </div>
-          </div>
-          <div class="card-actions">
-            <button class="btn btn-check-bench" onclick="checkBench('JR102')">
-              <i class="fas fa-check-circle"></i> Check Bench First
-            </button>
-            <button class="btn btn-forward-hr" onclick="forwardToHR('JR102')">
-              <i class="fas fa-paper-plane"></i> Forward To HR
-            </button>
-            <button class="btn btn-terminate" onclick="terminateRequest('JR102')">
-              <i class="fas fa-times-circle"></i> Terminate
+            <button class="btn btn-terminate" (click)="declineJobRequest(item.jobRequestId)">
+              <i class="fas fa-times-circle"></i> Decline
             </button>
           </div>
         </div>
-
-        <div class="card" data-status="forwarded">
-          <div class="card-header">
-            <div>
-              <div class="card-title">UI/UX Designer</div>
-              <div class="card-subtitle">JR103 • Project Gamma</div>
-            </div>
-            <span class="status-badge status-forwarded">Forwarded To HR</span>
-          </div>
-          <div class="card-content">
-            <div class="info-row">
-              <span class="info-label">Title:</span>
-              <span class="info-value">UI/UX Designer</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Skills:</span>
-              <span class="info-value">Figma, Adobe XD, Prototyping</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Experience:</span>
-              <span class="info-value">2+ years</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Min CTC:</span>
-              <span class="info-value">$50,000</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Max CTC:</span>
-              <span class="info-value">$65,000</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Headcount:</span>
-              <span class="info-value">1</span>
-            </div>
-          </div>
-          <div class="card-actions">
-            <button class="btn btn-check-bench" onclick="checkBench('JR103')">
-              <i class="fas fa-check-circle"></i> Check Bench First
-            </button>
-            <button class="btn btn-forward-hr" onclick="forwardToHR('JR103')">
-              <i class="fas fa-paper-plane"></i> Forward To HR
-            </button>
-            <button class="btn btn-terminate" onclick="terminateRequest('JR103')">
-              <i class="fas fa-times-circle"></i> Terminate
-            </button>
-          </div>
-        </div>
-
-        <div class="card" data-status="declined">
-          <div class="card-header">
-            <div>
-              <div class="card-title">QA Tester</div>
-              <div class="card-subtitle">JR104 • Project Delta</div>
-            </div>
-            <span class="status-badge status-declined">Declined</span>
-          </div>
-          <div class="card-content">
-            <div class="info-row">
-              <span class="info-label">Title:</span>
-              <span class="info-value">QA Tester</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Skills:</span>
-              <span class="info-value">Selenium, JIRA, Manual Testing</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Experience:</span>
-              <span class="info-value">3+ years</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Min CTC:</span>
-              <span class="info-value">$45,000</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Max CTC:</span>
-              <span class="info-value">$55,000</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Headcount:</span>
-              <span class="info-value">1</span>
-            </div>
-          </div>
-          <div class="card-actions">
-            <button class="btn btn-check-bench" onclick="checkBench('JR104')">
-              <i class="fas fa-check-circle"></i> Check Bench First
-            </button>
-            <button class="btn btn-forward-hr" onclick="forwardToHR('JR104')">
-              <i class="fas fa-paper-plane"></i> Forward To HR
-            </button>
-            <button class="btn btn-terminate" onclick="terminateRequest('JR104')">
-              <i class="fas fa-times-circle"></i> Terminate
-            </button>
-          </div>
-        </div>
+        }
       </section>
     </div>
 
-    <script>
-      // Filter functionality
-      function filterRequests(status) {
-        const allCards = document.querySelectorAll('#jobRequestsGrid .card');
-        const filterButtons = document.querySelectorAll('.filter-btn');
+    <!-- Forward To HR Form Modal (MOVED OUTSIDE THE LOOP) -->
+    <div *ngIf="showHrForm" class="modal-overlay" (click)="closeForwardToHRForm()">
+      <div class="modal-dialog" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2><i class="fas fa-paper-plane"></i> Forward to HR</h2>
+          <button class="close-btn" (click)="closeForwardToHRForm()" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
 
-        filterButtons.forEach((btn) => btn.classList.remove('active'));
+        <form (ngSubmit)="onSubmitForwardToHR()">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="hrId">
+                <i class="fas fa-user"></i> HR ID <span class="required">*</span>
+              </label>
+              <select
+                id="hrId"
+                [(ngModel)]="hrForwardDTO.hrId"
+                name="hrId"
+                class="form-control"
+                required
+              >
+                <option value="" disabled selected>Select HR</option>
+                <option *ngFor="let hr of hrIds" [value]="hr">{{ hr }}</option>
+              </select>
+            </div>
 
-        // Set active button
-        if (status === 'all') {
-          document.querySelector('.filter-btn:nth-child(1)').classList.add('active');
-        } else if (status === 'assigned') {
-          document.querySelector('.filter-btn:nth-child(2)').classList.add('active');
-        } else if (status === 'forwarded') {
-          document.querySelector('.filter-btn:nth-child(3)').classList.add('active');
-        } else if (status === 'declined') {
-          document.querySelector('.filter-btn:nth-child(4)').classList.add('active');
-        }
+            
 
-        allCards.forEach((card) => {
-          if (status === 'all') {
-            card.style.display = 'flex';
-          } else {
-            card.style.display = card.dataset.status === status ? 'flex' : 'none';
-          }
-        });
-      }
+            <div class="form-group">
+              <label for="priority">
+                <i class="fas fa-flag"></i> Priority <span class="required">*</span>
+              </label>
+              <select
+                id="priority"
+                [(ngModel)]="hrForwardDTO.priority"
+                name="priority"
+                class="form-control"
+                required
+              >
+                <option value="LOW">Low</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="HIGH">High</option>
+              </select>
+            </div>
 
-      // Dummy actions for buttons
-      function checkBench(id) {
-        alert(`Checking bench for Job Request: ${id}`);
-      }
-      function forwardToHR(id) {
-        alert(`Forwarding Job Request: ${id} to HR`);
-      }
-      function terminateRequest(id) {
-        if (confirm(`Are you sure you want to terminate Job Request: ${id}?`)) {
-          alert(`Job Request: ${id} terminated.`);
-          // You can add logic to remove or update the UI here.
-        }
-      }
-    </script>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="minCtc">
+                  <i class="fas fa-rupee-sign"></i> Min CTC <span class="required">*</span>
+                </label>
+                <input
+                  type="number"
+                  id="minCtc"
+                  [(ngModel)]="hrForwardDTO.minCtc"
+                  name="minCtc"
+                  class="form-control"
+                  placeholder="Minimum CTC"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="maxCtc">
+                  <i class="fas fa-rupee-sign"></i> Max CTC <span class="required">*</span>
+                </label>
+                <input
+                  type="number"
+                  id="maxCtc"
+                  [(ngModel)]="hrForwardDTO.maxCtc"
+                  name="maxCtc"
+                  class="form-control"
+                  placeholder="Maximum CTC"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" (click)="closeForwardToHRForm()" class="btn btn-cancel">
+              <i class="fas fa-times"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-submit">
+              <i class="fas fa-paper-plane"></i> Forward
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

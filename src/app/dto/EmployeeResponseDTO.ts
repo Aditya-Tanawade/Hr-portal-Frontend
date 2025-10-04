@@ -8,6 +8,6 @@ export class EmployeeResponseDTO{
     active:boolean=true;
     projectId:number=0;
     skills:string="";
-    experience:string="";
+    experience:number=0;
     profileRole:string="";
 }

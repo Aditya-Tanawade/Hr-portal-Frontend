@@ -5,86 +5,76 @@
                 <h1 class="page-title">All Candidates</h1>
                 <p class="page-subtitle">Manage all candidates including previous applicants</p>
             </div>
-            <button class="btn btn-primary" onclick="openAddCandidateModal()">
-                <i class="fas fa-user-plus"></i> Add New Candidate
-            </button>
+            
         </div>
     </div>
 
-    <!-- Filter Panel -->
-    <div class="filter-panel">
-        <div class="filter-row">
-            <!-- Search Bar -->
-            <div class="form-group">
-                <label class="form-label">Search Candidates</label>
-                <input type="text" id="searchText" class="form-control" placeholder="Search by name, skills, or experience...">
-            </div>
+    
 
-            <!-- Skills Filter -->
-            <div class="form-group">
-                <label class="form-label">Skills</label>
-                <select id="skills" class="form-control">
-                    <option value="">All Skills</option>
-                    <option value="React">React</option>
-                    <option value="Angular">Angular</option>
-                    <option value="Vue.js">Vue.js</option>
-                    <option value="Node.js">Node.js</option>
-                    <option value="Python">Python</option>
-                    <option value="Java">Java</option>
-                </select>
-            </div>
+     <section class="filters-section">
+  <div class="filters-header">
+    <h2 class="filters-title">Refine Your Search</h2>
+    <button class="clear-filters-btn">
+      <i class="fas fa-times"></i> Clear All
+    </button>
+  </div>
 
-            <!-- Experience Filter -->
-            <div class="form-group">
-                <label class="form-label">Experience</label>
-                <select id="experience" class="form-control">
-                    <option value="">All Experience</option>
-                    <option value="0-2">0-2 years</option>
-                    <option value="2-5">2-5 years</option>
-                    <option value="5-8">5-8 years</option>
-                    <option value="8+">8+ years</option>
-                </select>
-            </div>
+  <!-- New row wrapper -->
+  <div class="filters-row">
+    <div class="filter-group">
+      <label class="filter-label">Experience Level</label>
+      <select class="filter-select" id="experienceFilter">
+        <option value="">All Levels</option>
+        <option value="entry">Entry Level (0-2 years)</option>
+        <option value="mid">Mid Level (2-5 years)</option>
+        <option value="senior">Senior Level (5-8 years)</option>
+        <option value="lead">Lead/Manager (8+ years)</option>
+      </select>
+    </div>
 
-            <!-- Status Filter -->
-            <div class="form-group">
-                <label class="form-label">Status</label>
-                <select id="status" class="form-control">
-                    <option value="">All Status</option>
-                    <option value="New">New</option>
-                    <option value="Applied">Applied</option>
-                    <option value="Shortlisted">Shortlisted</option>
-                    <option value="Interview">Interview</option>
-                    <option value="Selected">Selected</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-            </div>
+    <div class="filter-group">
+      <label class="filter-label">Job Type</label>
+      <select class="filter-select" id="jobTypeFilter">
+        <option value="">All Types</option>
+        <option value="fulltime">Full-time</option>
+        <option value="parttime">Part-time</option>
+        <option value="contract">Contract</option>
+        <option value="freelance">Freelance</option>
+        <option value="internship">Internship</option>
+      </select>
+    </div>
 
-            <!-- Notice Period Filter -->
-            <div class="form-group">
-                <label class="form-label">Notice Period (in days)</label>
-                <input type="number" id="noticePeriod" class="form-control" placeholder="Enter notice period">
-            </div>
+    <div class="filter-group">
+      <label class="filter-label">Salary Range (LPA)</label>
+      <div class="salary-range-container">
+        <input type="number" class="salary-input" placeholder="Min" id="minSalary" />
+        <span>to</span>
+        <input type="number" class="salary-input" placeholder="Max" id="maxSalary" />
+      </div>
+    </div>
 
-            <!-- Expected CTC Filters -->
-            <div class="form-group">
-                <label class="form-label">Expected CTC</label>
-                <input type="number" id="minExpectedCtc" class="form-control" placeholder="Min CTC" step="0.01">
-                <input type="number" id="maxExpectedCtc" class="form-control" placeholder="Max CTC" step="0.01">
-            </div>
-
-            <!-- Filter Button -->
-            <div class="form-group">
+    <div class="filter-group">
+      <label class="filter-label">Work Mode</label>
+      <select class="filter-select" id="workModeFilter">
+        <option value="">All Modes</option>
+        <option value="office">Office</option>
+        <option value="remote">Remote</option>
+        <option value="hybrid">Hybrid</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
                 <button class="btn btn-primary" onclick="applyFilters()">
                     <i class="fas fa-search"></i> Filter
                 </button>
             </div>
-        </div>
-    </div>
+</section>
+
+
+
 
     <!-- Candidates List (Dynamic Cards) -->
     <div class="cards-grid" id="candidatesList">
-        <!-- Demo Candidate Cards -->
 
         <div class="candidate-card">
             <div class="candidate-profile">

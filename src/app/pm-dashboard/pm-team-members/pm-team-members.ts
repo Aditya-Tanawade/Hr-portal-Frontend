@@ -6,25 +6,26 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-pm-team-members',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './pm-team-members.html',
   styleUrl: './pm-team-members.css'
 })
 export class PmTeamMembers implements OnInit {
 
-  teamMembers:EmployeeResponseDTO[]=[];
-  projectId:number=2;
+  teamMembers: EmployeeResponseDTO[] = [];
+  projectId: number = 2;
 
-  constructor(private pmService:PmService){}
+  constructor(private pmService: PmService) { }
+
   ngOnInit(): void {
     this.getAllTeamMembers(this.projectId);
   }
 
-   getAllTeamMembers(projectId:number) {
+  getAllTeamMembers(projectId: number) {
     this.pmService.getAllTeamMembers(projectId).subscribe({
       next: (data) => {
-        console.log(data);
-        this.teamMembers=data;
+        console.log('Team members fetched:', data);
+        this.teamMembers = data;
       },
       error: (err) => {
         console.error("Exception occurred while calling API", err);
@@ -35,10 +36,15 @@ export class PmTeamMembers implements OnInit {
     });
   }
 
-
   openAddMemberModal() {
-  console.log("Open add member modal here...");
+    console.log("Open add member modal here...");
+    // Implement your modal logic here
+  }
+
+  assignTask(member: EmployeeResponseDTO) {
+    console.log("Assigning task to:", member.fullName);
+    // Implement your task assignment logic here
+    // You can navigate to a task assignment page or open a modal
+  }
 }
 
-
-}

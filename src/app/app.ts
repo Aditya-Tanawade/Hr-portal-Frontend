@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 declare var feather: any;
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, Dashboard,MatDialogModule,MatButtonModule],
+  imports: [RouterOutlet,MatDialogModule,MatButtonModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

@@ -5,6 +5,8 @@ import { ProjectRequestDTO } from '../dto/ProjectRequestDTO';
 import { ProjectResponseDTO } from '../dto/ProjectResponseDTO';
 import { BenchEmployeeDTO } from '../dto/BenchEmployeeDTO';
 import { EmployeeResponseDTO } from '../dto/EmployeeResponseDTO';
+import { PmJobRequestResponseDTO } from '../dto/PmJobRequestResponseDTO';
+import { HrForwardDTO } from '../dto/HrForwardDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +43,6 @@ export class PmService {
 
   assignProject(projectRequestDto: ProjectRequestDTO, loginPmId: string): Observable<ProjectResponseDTO> {
     const params = new HttpParams().set('loginPmId', loginPmId);
-
     return this.httpClient.post<ProjectResponseDTO>(
       this.baseurl + "add",
       projectRequestDto,
@@ -74,6 +75,9 @@ export class PmService {
   }
 
 
+  getAllJobRequests(loginPmId: string): Observable<PmJobRequestResponseDTO[]> {
+    return this.httpClient.get<PmJobRequestResponseDTO[]>(this.baseurl+"job-requests/"+loginPmId);
+  }
 
   //Bench EMployee
   getAllEmployeesOnBench():Observable<BenchEmployeeDTO[]>{
@@ -81,7 +85,46 @@ export class PmService {
   }
 
 
+
+  assignProjectToBenchEmployee(jobRequestId: number, projectId: number, employeeId: string): Observable<string> {
+  const url = `${this.baseurl}${jobRequestId}/assign-project`;
+
+  const params = new HttpParams()
+    .set('projectId', projectId)
+    .set('employeeId', employeeId);
+  return this.httpClient.patch<string>(url, null, { params, responseType: 'text' as 'json' });
+}
+
+
+
   getAllTeamMembers(projectId:number):Observable<EmployeeResponseDTO[]>{
         return this.httpClient.get<BenchEmployeeDTO[]>(this.baseurl+"get-all-team-members/" +projectId );
   }
+
+
+  findHrIDs(): Observable<string[]> {
+    return this.httpClient.get<string[]>(this.baseurl + "get/hr");
+  }
+
+
+  ForwardTohr(hrForwardDto:HrForwardDTO,jobRequestId:number):Observable<string>{
+    return this.httpClient.patch<string>(this.baseurl+"forward-hr/"+jobRequestId,hrForwardDto,{responseType: 'text' as 'json'});
+  }
+
+
+
+  // declineJoBRequest(jobRequestId:number):Observable<string>{
+  //   return this.httpClient.patch<string>(this.baseurl+"decline/job-request/"+jobRequestId,{responseType: 'text' as 'json'});
+  // }
+
+
+  declineJoBRequest(jobRequestId: number): Observable<string> {
+  return this.httpClient.patch(
+    this.baseurl + "decline/job-request/" + jobRequestId,
+    {}, // required body
+    { responseType: 'text' } // ✅ plain text response
+  );
+}
+
+
 }

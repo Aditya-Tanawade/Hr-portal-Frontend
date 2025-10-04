@@ -178,6 +178,34 @@
         text-overflow: ellipsis;
     }
 
+    /* Status Colors */
+.status-forwarded {
+    background-color: #f39c12;
+    box-shadow: 0 0 8px rgba(243, 156, 18, 0.7);
+}
+
+.status-posted {
+    background-color: #27ae60;
+    box-shadow: 0 0 8px rgba(41, 128, 185, 0.7);
+}
+
+
+
+.priority-low {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.priority-medium {
+    color: #f39c12;
+    font-weight: bold;
+}
+
+.priority-high {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
     /* Card Actions */
     .card-actions {
         padding: 15px 25px;

@@ -62,7 +62,7 @@ import { CandidateLoginResponseDto } from '../../dto/CandidateLoginResponseDto';
 @Component({
   selector: 'app-candidate-login',
   standalone: true,
-  imports: [FormsModule, RouterLink, RouterOutlet], 
+  imports: [FormsModule, RouterLink], 
   templateUrl: './candidate-login.html',
   styleUrl: './candidate-login.css'
 })

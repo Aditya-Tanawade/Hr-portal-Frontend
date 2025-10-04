@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CandidateApplicationDto } from '../../dto/CandidateApplicationDto';
 import { Router } from '@angular/router';
 
 // Assume your CandidateService has a method getMyApplications()

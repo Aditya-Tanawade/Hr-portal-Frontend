@@ -30,9 +30,13 @@
       />
       <select id="roleFilter" [(ngModel)]="roleFilterInput">
         <option value="">All Roles</option>
-        <option value="EMPLOYEE">Employee</option>
-        <option value="INTERN">Intern</option>
-        <option value="DIRECTOR">Director</option>
+        <option value="Frontend Developer">Frontend Developer</option>
+        <option value="Backend Developer">Backend Developer</option>
+        <option value="Tester">Tester</option>
+        <option value="Database Developer">Database Developer</option>
+        <option value="SOFTWARE ENGINEER">Software Engineer</option>
+
+
       </select>
       <button (click)="applyFilters()"><i class="fas fa-filter"></i> Filter</button>
     </div>
@@ -71,7 +75,7 @@
         </div>
         <div style="margin-top: auto; text-align: right">
           <div class="assign-button-container">
-            <button class="btn-assign" (click)="assignProject(employee.employeeId)">
+            <button class="btn-assign" (click)="assignProjectToBenchEmployee(employee.employeeId)">
               <i class="fas fa-tasks"></i> Assign Project
             </button>
           </div>

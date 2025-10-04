@@ -46,46 +46,115 @@ body {
     background-color: #2980b9;
 }
 
-.filter-panel {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+.filters-section {
+    background: #f9fafb;
+    border-radius: 16px;
+    padding: 20px 25px;
     margin-bottom: 30px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
 }
 
-.filter-row {
+/* Header Row */
+.filters-header {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.form-group {
-    flex: 1 1 calc(33.33% - 20px);
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 15px;
 }
 
-.form-group label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #2c3e50;
+.filters-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1e293b;
 }
 
-.form-control {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #dcdfe1;
-    border-radius: 5px;
-    font-size: 14px;
-    color: #333;
+.clear-filters-btn {
+    background: #f1f5f9;
+    border: none;
+    color: #475569;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.clear-filters-btn:hover {
+    background: #e2e8f0;
+    color: #1e2a95;
+}
+
+/* Filters Row */
+.filters-row {
+    display: flex;
+    flex-wrap: nowrap;        /* keep in one line */
+    gap: 16px;
+    overflow-x: auto;         /* scrollable if too many filters */
+    padding-bottom: 5px;      /* avoid scroll overlap */
+}
+
+/* Hide scrollbar (Chrome/Safari/Edge) */
+.filters-row::-webkit-scrollbar {
+    height: 6px;
+}
+.filters-row::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+/* Each Filter Box */
+.filter-group {
+    flex: 0 0 220px; /* fixed width, scroll if overflow */
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 12px 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.filter-group:hover {
+    border-color: #1e2a95;
+    box-shadow: 0 4px 12px rgba(30, 42, 149, 0.1);
+}
+
+/* Labels */
+.filter-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Inputs */
+.filter-select,
+.salary-input {
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #f8fafc;
+    font-size: 0.9rem;
+    color: #374151;
+    transition: all 0.2s ease;
+}
+
+.filter-select:focus,
+.salary-input:focus {
     outline: none;
-    transition: border-color 0.3s ease;
+    border-color: #1e2a95;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(30, 42, 149, 0.1);
 }
 
-.form-control:focus {
-    border-color: #3498db;
+.salary-range-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
-
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
