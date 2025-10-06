@@ -155,7 +155,6 @@ export const routes: Routes = [
     ],
   },
 
-  { path: 'hr-dashboard', component: HrDashboard },
 
   { path: 'hr-dashboard', redirectTo: 'hr-dashboard/overview', pathMatch: 'full' },
 

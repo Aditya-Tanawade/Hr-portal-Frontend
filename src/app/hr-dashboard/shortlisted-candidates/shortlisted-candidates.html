@@ -1,192 +1,308 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ShortListed Candidates</title>
-
-    <!-- FontAwesome CDN for icons -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-    />
-</head>
-<body>
-    <div class="applications-container">
-        <!-- Header Section -->
-        <section class="applications-header">
-            <div class="header-content">
-                <h1 class="page-title">ShortListed Candidates Dashboard</h1>
-                <p class="page-subtitle">manage ShortListed Candidates</p>
-                <div class="applications-stats">
-                    <div class="stat-item stats-total">
-                        <div class="stat-number">5</div>
-                        <div class="stat-label">Total ShortListed</div>
-                    </div>
-                    <div class="stat-item stats-approved">
-                        <div class="stat-number">8</div>
-                        <div class="stat-label">Selected</div>
-                    </div>
-                    <div class="stat-item stats-declined">
-                        <div class="stat-number">2</div>
-                        <div class="stat-label">Rejected</div>
-                    </div>
-                    <div class="stat-item stats-pending">
-                        <div class="stat-number">1</div>
-                        <div class="stat-label">Assigned Interview</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="filter-buttons">
-            <button class="filter-btn active" onclick="filterRequests('all')">All</button>
-            <button class="filter-btn" onclick="filterRequests('assigned')">Assigned Interviews</button>
-            <button class="filter-btn" onclick="filterRequests('rejected')">Rejected</button>
-            <button class="filter-btn" onclick="filterRequests('selected')">Selected</button>
-        </section>
-
-        <!-- Job Requests Cards -->
-        <div class="cards-grid" id="candidatesList">
-            <!-- Demo Candidate Cards -->
-
-            <div class="candidate-card" data-status="shortlisted">
-                <div class="candidate-profile">
-                    <div class="candidate-avatar">JS</div>
-                    <div class="candidate-info">
-                        <h4>John Smith</h4>
-                        <p>Full Stack Developer • 4 years experience</p>
-                        <div class="skills-tags">
-                            <span class="skill-tag">React</span>
-                            <span class="skill-tag">Node.js</span>
-                            <span class="skill-tag">MongoDB</span>
-                            <span class="skill-tag">TypeScript</span>
-                        </div>
-                    </div>
-                    <span class="status-badge status-badge-shortlisted">Shortlisted</span>
-                </div>
-                <div class="card-content">
-                    <div class="info-row">
-                        <span class="info-label">Applied For:</span>
-                        <span class="info-value">React Developer</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Applied Date:</span>
-                        <span class="info-value">Oct 18, 2024</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Location:</span>
-                        <span class="info-value">Mumbai, India</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Expected Salary:</span>
-                        <span class="info-value">₹12-15 LPA</span>
-                    </div>
-                </div>
-                <div class="card-actions">
-                    <button class="btn btn-success btn-sm" onclick="scheduleInterview('CAND001')">
-                        <i class="fas fa-calendar"></i> Schedule Interview
-                    </button>
-                    <button class="btn btn-outline btn-sm" onclick="viewCandidateDetails('CAND001')">
-                        <i class="fas fa-eye"></i> View Profile
-                    </button>
-                    <button class="btn btn-danger btn-sm">
-                        <i class="fas fa-times"></i> Reject
-                    </button>
-                </div>
-            </div>
-
-            <div class="candidate-card" data-status="assigned">
-                <div class="candidate-profile">
-                    <div class="candidate-avatar">LW</div>
-                    <div class="candidate-info">
-                        <h4>Lisa Wong</h4>
-                        <p>UI/UX Designer • 3 years experience</p>
-                        <div class="skills-tags">
-                            <span class="skill-tag">Figma</span>
-                            <span class="skill-tag">Adobe XD</span>
-                            <span class="skill-tag">Sketch</span>
-                            <span class="skill-tag">Prototyping</span>
-                        </div>
-                    </div>
-                    <span class="status-badge status-badge-interview-round1">Round 1</span>
-                </div>
-                <div class="card-content">
-                    <div class="info-row">
-                        <span class="info-label">Applied For:</span>
-                        <span class="info-value">UI/UX Designer</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Interview Date:</span>
-                        <span class="info-value">Oct 25, 2024</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Interviewer:</span>
-                        <span class="info-value">Sarah Johnson (TL)</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Portfolio:</span>
-                        <span class="info-value">Available ✓</span>
-                    </div>
-                </div>
-                <div class="card-actions">
-                    <button class="btn btn-primary btn-sm">
-                        <i class="fas fa-calendar"></i> Reschedule
-                    </button>
-                    <button class="btn btn-outline btn-sm" onclick="viewPortfolio('CAND002')">
-                        <i class="fas fa-palette"></i> View Portfolio
-                    </button>
-                </div>
-            </div>
-
-            <div class="candidate-card" data-status="rejected">
-                <div class="candidate-profile">
-                    <div class="candidate-avatar">AR</div>
-                    <div class="candidate-info">
-                        <h4>Adam Reddy</h4>
-                        <p>Backend Developer • 5 years experience</p>
-                        <div class="skills-tags">
-                            <span class="skill-tag">Java</span>
-                            <span class="skill-tag">Spring Boot</span>
-                            <span class="skill-tag">AWS</span>
-                            <span class="skill-tag">SQL</span>
-                        </div>
-                    </div>
-                    <span class="status-badge status-badge-applied">Applied</span>
-                </div>
-                <div class="card-content">
-                    <div class="info-row">
-                        <span class="info-label">Applied For:</span>
-                        <span class="info-value">Backend Developer</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Applied Date:</span>
-                        <span class="info-value">Oct 20, 2024</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Location:</span>
-                        <span class="info-value">Hyderabad, India</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Expected Salary:</span>
-                        <span class="info-value">₹18-22 LPA</span>
-                    </div>
-                </div>
-                <div class="card-actions">
-                    <button class="btn btn-success btn-sm" onclick="scheduleInterview('CAND003')">
-                        <i class="fas fa-calendar"></i> Schedule Interview
-                    </button>
-                    <button class="btn btn-outline btn-sm" onclick="viewCandidateDetails('CAND003')">
-                        <i class="fas fa-eye"></i> View Profile
-                    </button>
-                    <button class="btn btn-danger btn-sm">
-                        <i class="fas fa-times"></i> Reject
-                    </button>
-                </div>
-            </div>
+<div class="applications-container">
+  <!-- Header Section -->
+  <section class="applications-header">
+    <div class="header-content">
+      <h1 class="page-title">ShortListed Candidates Dashboard</h1>
+      <p class="page-subtitle">Manage ShortListed Candidates</p>
+      <div class="applications-stats">
+        <div class="stat-item stats-total">
+          <div class="stat-number">{{ countTotalShortlisted }}</div>
+          <div class="stat-label">Total ShortListed</div>
         </div>
+        <div class="stat-item stats-pending">
+          <div class="stat-number">{{ countAssiignedInterviews }}</div>
+          <div class="stat-label">Assigned Interview</div>
+        </div>
+        <div class="stat-item stats-approved">
+          <div class="stat-number">{{ countSelectedCandidates }}</div>
+          <div class="stat-label">Selected</div>
+        </div>
+        <div class="stat-item stats-declined">
+          <div class="stat-number">{{ countRejectedCandidates }}</div>
+          <div class="stat-label">Rejected</div>
+        </div>
+      </div>
     </div>
-</body>
-</html>
+  </section>
+
+  <!-- Filter Buttons -->
+  <section class="filter-buttons">
+    <button class="filter-btn" [class.active]="selectedFilter === 'all'" (click)="applyFilter('all')">
+      All
+    </button>
+    <button class="filter-btn" [class.active]="selectedFilter === 'assigned'" (click)="applyFilter('assigned')">
+      Assigned Interviews
+    </button>
+    <button class="filter-btn" [class.active]="selectedFilter === 'selected'" (click)="applyFilter('selected')">
+      Selected
+    </button>
+    <button class="filter-btn" [class.active]="selectedFilter === 'rejected'" (click)="applyFilter('rejected')">
+      Rejected
+    </button>
+  </section>
+
+  <!-- Candidate Cards Grid -->
+  <div class="cards-grid" *ngIf="filterShortlistedCandidates.length > 0">
+    
+    <div class="candidate-card" *ngFor="let candidate of filterShortlistedCandidates" [ngClass]="{'card-rejected': isRejected(candidate.interviewStatus)}">
+      
+      <!-- Card for PENDING status -->
+      <ng-container *ngIf="isPending(candidate.interviewStatus)">
+        <div class="candidate-profile">
+          <div class="candidate-avatar">{{ getInitials(candidate.fullName) }}</div>
+          <div class="candidate-info">
+            <h4>{{ candidate.fullName }}</h4>
+            <p>{{ candidate.profileRole || 'Not Specified' }} • {{ candidate.totalExperience }} years experience</p>
+            <div class="skills-tags">
+              <span class="skill-tag" *ngFor="let skill of getSkillsArray(candidate.skills)">
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+          <span class="status-badge status-badge-pending">{{ getStatusLabel(candidate.interviewStatus) }}</span>
+        </div>
+        <div class="card-content">
+          <div class="info-row">
+            <span class="info-label">Applied For:</span>
+            <span class="info-value">{{ candidate.title || 'N/A' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Applied Date:</span>
+            <span class="info-value">{{ formatDate(candidate.appliedAt) }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Email:</span>
+            <span class="info-value">{{ candidate.email }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Expected Salary:</span>
+            <span class="info-value">₹{{ candidate.expectedCtc }} LPA</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Notice Period:</span>
+            <span class="info-value">{{ candidate.noticePeriod }} days</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-success btn-sm" (click)="scheduleInterview(candidate)">
+            <i class="fas fa-calendar"></i> Schedule Interview
+          </button>
+          <button class="btn btn-outline btn-sm" (click)="viewProfile(candidate)">
+            <i class="fas fa-file-alt"></i> View Profile
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- Card for INTERVIEW1_CLEARED status -->
+      <ng-container *ngIf="isInterview1Cleared(candidate.interviewStatus)">
+        <div class="candidate-profile">
+          <div class="candidate-avatar">{{ getInitials(candidate.fullName) }}</div>
+          <div class="candidate-info">
+            <h4>{{ candidate.fullName }}</h4>
+            <p>{{ candidate.profileRole || 'Not Specified' }} • {{ candidate.totalExperience }} years experience</p>
+            <div class="skills-tags">
+              <span class="skill-tag" *ngFor="let skill of getSkillsArray(candidate.skills)">
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+          <span class="status-badge status-badge-cleared">{{ getStatusLabel(candidate.interviewStatus) }}</span>
+        </div>
+        <div class="card-content">
+          <div class="info-row">
+            <span class="info-label">Position:</span>
+            <span class="info-value">{{ candidate.title || 'N/A' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Round 1 Score:</span>
+            <span class="info-value score-highlight">{{ candidate.score }}/10</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Round 1 Remarks:</span>
+            <span class="info-value">{{ candidate.remarks || 'No remarks provided' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Email:</span>
+            <span class="info-value">{{ candidate.email }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Expected CTC:</span>
+            <span class="info-value">₹{{ candidate.expectedCtc }} LPA</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Next Step:</span>
+            <span class="info-value">Schedule Round 2 Interview</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary btn-sm" (click)="scheduleRound2(candidate)">
+            <i class="fas fa-calendar-check"></i> Schedule Round 2
+          </button>
+          <button class="btn btn-outline btn-sm" (click)="viewProfile(candidate)">
+            <i class="fas fa-file-alt"></i> View Profile
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- Card for INTERVIEW2_CLEARED status -->
+      <ng-container *ngIf="isInterview2Cleared(candidate.interviewStatus)">
+        <div class="candidate-profile">
+          <div class="candidate-avatar">{{ getInitials(candidate.fullName) }}</div>
+          <div class="candidate-info">
+            <h4>{{ candidate.fullName }}</h4>
+            <p>{{ candidate.profileRole || 'Not Specified' }} • {{ candidate.totalExperience }} years experience</p>
+            <div class="skills-tags">
+              <span class="skill-tag" *ngFor="let skill of getSkillsArray(candidate.skills)">
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+          <span class="status-badge status-badge-cleared">{{ getStatusLabel(candidate.interviewStatus) }}</span>
+        </div>
+        <div class="card-content">
+          <div class="info-row">
+            <span class="info-label">Position:</span>
+            <span class="info-value">{{ candidate.title || 'N/A' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Round 2 Score:</span>
+            <span class="info-value score-highlight">{{ candidate.score }}/10</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Round 2 Remarks:</span>
+            <span class="info-value">{{ candidate.remarks || 'No remarks provided' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Email:</span>
+            <span class="info-value">{{ candidate.email }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Overall Performance:</span>
+            <span class="info-value">Strong candidate for HR discussion</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Next Step:</span>
+            <span class="info-value">Schedule HR Round</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary btn-sm" (click)="scheduleHRRound(candidate)">
+            <i class="fas fa-user-tie"></i> Schedule HR Round
+          </button>
+          <button class="btn btn-outline btn-sm" (click)="viewProfile(candidate)">
+            <i class="fas fa-file-alt"></i> View Profile
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- Card for HR_CLEARED status -->
+      <ng-container *ngIf="isHRCleared(candidate.interviewStatus)">
+        <div class="candidate-profile">
+          <div class="candidate-avatar selected-avatar">{{ getInitials(candidate.fullName) }}</div>
+          <div class="candidate-info">
+            <h4>{{ candidate.fullName }}</h4>
+            <p>{{ candidate.profileRole || 'Not Specified' }} • {{ candidate.totalExperience }} years experience</p>
+            <div class="skills-tags">
+              <span class="skill-tag" *ngFor="let skill of getSkillsArray(candidate.skills)">
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+          <span class="status-badge status-badge-selected">{{ getStatusLabel(candidate.interviewStatus) }}</span>
+        </div>
+        <div class="card-content card-content-selected">
+          <div class="info-row">
+            <span class="info-label">Position:</span>
+            <span class="info-value">{{ candidate.title || 'N/A' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Final HR Score:</span>
+            <span class="info-value score-highlight-final">{{ candidate.score }}/10</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">HR Remarks:</span>
+            <span class="info-value">{{ candidate.remarks || 'Excellent candidate' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Email:</span>
+            <span class="info-value">{{ candidate.email }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Expected CTC:</span>
+            <span class="info-value">₹{{ candidate.expectedCtc }} LPA</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Notice Period:</span>
+            <span class="info-value">{{ candidate.noticePeriod }} days</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Next Step:</span>
+            <span class="info-value">Salary Negotiation</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-success btn-sm" (click)="discussSalary(candidate)">
+            <i class="fas fa-dollar-sign"></i> Discuss Salary
+          </button>
+          <button class="btn btn-outline btn-sm" (click)="viewProfile(candidate)">
+            <i class="fas fa-file-alt"></i> View Profile
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- Card for REJECTED statuses -->
+      <ng-container *ngIf="isRejected(candidate.interviewStatus)">
+        <div class="candidate-profile">
+          <div class="candidate-avatar rejected-avatar">{{ getInitials(candidate.fullName) }}</div>
+          <div class="candidate-info">
+            <h4>{{ candidate.fullName }}</h4>
+            <p>{{ candidate.profileRole || 'Not Specified' }} • {{ candidate.totalExperience }} years experience</p>
+            <div class="skills-tags">
+              <span class="skill-tag" *ngFor="let skill of getSkillsArray(candidate.skills)">
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+          <span class="status-badge status-badge-rejected">{{ getStatusLabel(candidate.interviewStatus) }}</span>
+        </div>
+        <div class="card-content">
+          <div class="info-row">
+            <span class="info-label">Position:</span>
+            <span class="info-value">{{ candidate.title || 'N/A' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Score:</span>
+            <span class="info-value">{{ candidate.score }}/10</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Rejection Reason:</span>
+            <span class="info-value">{{ candidate.remarks || 'Did not meet requirements' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Email:</span>
+            <span class="info-value">{{ candidate.email }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Date:</span>
+            <span class="info-value">{{ formatDate(candidate.appliedAt) }}</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-outline btn-sm" (click)="viewProfile(candidate)">
+            <i class="fas fa-file-alt"></i> View Profile
+          </button>
+          <button class="btn btn-outline btn-sm" (click)="downloadResume(candidate)" *ngIf="candidate.resumePath">
+            <i class="fas fa-download"></i> Resume
+          </button>
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+
+  <!-- No Results Message -->
+  <div *ngIf="filterShortlistedCandidates.length === 0" class="no-results">
+    <i class="fas fa-inbox fa-3x"></i>
+    <p>No candidates found matching your criteria.</p>
+  </div>
+</div>

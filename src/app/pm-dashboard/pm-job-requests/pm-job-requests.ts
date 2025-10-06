@@ -18,8 +18,8 @@ export class PmJobRequests implements OnInit {
   countOfPendingJobRequests: number = 0;
   countOfApprovedJobRequests: number = 0;
   CountOfClosedJobRequests: number = 0;
-  pmJobResponse: PmJobRequestResponseDTO[] = []; // full list from backend
-  filteredJobRequests: PmJobRequestResponseDTO[] = []; // list after applying filters
+  pmJobResponse: PmJobRequestResponseDTO[] = []; 
+  filteredJobRequests: PmJobRequestResponseDTO[] = []; 
 
 
   selectedFilter: string = 'all';

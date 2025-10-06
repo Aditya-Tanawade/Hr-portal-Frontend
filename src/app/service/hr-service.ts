@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { PmJobRequestResponseDTO } from '../dto/PmJobRequestResponseDTO';
 import { AppliedCandidateDTO } from '../dto/AppliedCandidateDTO';
 import { CandidateFilterRequestDTO } from '../dto/CandidateFilterRequestDTO';
+import { ShortlistedCandidatesDTO } from '../dto/ShortlistedCandidatesDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +71,29 @@ export class HrService {
   );
 }
 
+
+
+  getCountOfAssignedInterview(loginHrId:string):Observable<number>{
+    return this.httpClient.get<number>(this.baseurl+"count/assigned-interview/"+loginHrId);
+  }
+
+
+  getCountOfSelectedCandidates(loginHrId:string):Observable<number>{
+    return this.httpClient.get<number>(this.baseurl+"count/selected/"+loginHrId);
+  }
+
+
+  getCountOfRejectedCandidates(loginHrId:string):Observable<number>{
+    return this.httpClient.get<number>(this.baseurl+"count/rejected/"+loginHrId);
+  }
+
      
+
+   getAllShortlistedCandidates(loginHrId: string): Observable<ShortlistedCandidatesDTO[]> {
+      return this.httpClient.get<ShortlistedCandidatesDTO[]>(this.baseurl+"/getshortlisted/"+loginHrId);
+    }
+
+
+  
 
 }
