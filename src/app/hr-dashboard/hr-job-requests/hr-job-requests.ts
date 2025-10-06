@@ -6,85 +6,90 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-hr-job-requests',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './hr-job-requests.html',
   styleUrl: './hr-job-requests.css'
 })
 export class HrJobRequests implements OnInit {
 
-  countOfjobRequests:number=0;
-  countOfPostedJobs:number=0;
-  countOfPendingJobRequests:number=0;
-    selectedFilter: string = 'all';
+  countOfjobRequests: number = 0;
+  countOfPostedJobs: number = 0;
+  countOfPendingJobRequests: number = 0;
+  selectedFilter: string = 'all';
 
-    JobResponse: PmJobRequestResponseDTO[] = []; // full list from backend
-    filteredJobRequests: PmJobRequestResponseDTO[] = []; // list after applying filters
+  // ✅ IMPORTANT: Initialize as empty arrays, not undefined
+  JobResponse: PmJobRequestResponseDTO[] = [];
+  filteredJobRequests: PmJobRequestResponseDTO[] = [];
 
-  loginHrId:string='EMP1003';
+  loginHrId: string = 'EMP1003';
+  
+  constructor(private hrService: HrService) {}
+
   ngOnInit(): void {
+    console.log('ngOnInit called with loginHrId:', this.loginHrId);
+    console.log('Initial filteredJobRequests:', this.filteredJobRequests);
+    
     this.getCountOfJobRequests(this.loginHrId);
     this.getCountOfPostedJobs(this.loginHrId);
+    this.getCountOfPendingJobRequests(this.loginHrId);
     this.getAllJobrequestsByHrId(this.loginHrId);
-
   }
 
-  constructor(private hrService:HrService){}
-
-  getCountOfJobRequests(loginHrId: string) {
-      this.hrService.getCountOfJobRequests(loginHrId).subscribe({
-        next: (data: number) => {
-          console.log('Count OF JOb Requests From API', data);
-          this.countOfjobRequests=data;
-        },
-        error: (err) => {
-          console.error("Exception occurred while calling API", err.error);
-        }
-      });
-    }
-  
-  
-    getCountOfPostedJobs(loginHrId: string) {
-      this.hrService.getCountOfPostedJobs(loginHrId).subscribe({
-        next: (data: number) => {
-          console.log('Count OF Posted JObs  From API', data);
-          this.countOfPostedJobs=data;
-        },
-        error: (err) => {
-          console.error("Exception occurred while calling API", err.error);
-        }
-      });
-    }
-
-
-    getCountOfPendingJobRequests(loginHrId: string) {
-      this.hrService.getCountOfPendingJobRequests(loginHrId).subscribe({
-        next: (data: number) => {
-          console.log('Count OF Posted JObs  From API', data);
-          this.countOfPostedJobs=data;
-        },
-        error: (err) => {
-          console.error("Exception occurred while calling API");
-        }
-      });
-    }
-
-
-    getAllJobrequestsByHrId(loginHrId: string) {
-    this.hrService.getAllJobRequests(loginHrId).subscribe({
-      next: (data) => {
-        console.log('All JOb Request From API ', data);
-        this.JobResponse = data;
-        this.filteredJobRequests = data;
+  getCountOfJobRequests(loginHrId: string): void {
+    this.hrService.getCountOfJobRequests(loginHrId).subscribe({
+      next: (data: number) => {
+        console.log('Count OF Job Requests From API', data);
+        this.countOfjobRequests = data;
       },
       error: (err) => {
         console.error("Exception occurred while calling API", err);
+      }
+    });
+  }
+  
+  getCountOfPostedJobs(loginHrId: string): void {
+    this.hrService.getCountOfPostedJobs(loginHrId).subscribe({
+      next: (data: number) => {
+        console.log('Count OF Posted Jobs From API', data);
+        this.countOfPostedJobs = data;
+      },
+      error: (err) => {
+        console.error("Exception occurred while calling API", err);
+      }
+    });
+  }
+
+  getCountOfPendingJobRequests(loginHrId: string): void {
+    this.hrService.getCountOfPendingJobRequests(loginHrId).subscribe({
+      next: (data: number) => {
+        console.log('Count OF Pending Job Requests From API', data);
+        this.countOfPendingJobRequests = data;
+      },
+      error: (err) => {
+        console.error("Exception occurred while calling API", err);
+      }
+    });
+  }
+
+  getAllJobrequestsByHrId(loginHrId: string): void {
+    this.hrService.getAllJobRequests(loginHrId).subscribe({
+      next: (data: PmJobRequestResponseDTO[]) => {
+        console.log('All Job Requests From API', data);
+        // ✅ Ensure data is an array
+        this.JobResponse = Array.isArray(data) ? data : [];
+        this.filteredJobRequests = Array.isArray(data) ? [...data] : [];
+      },
+      error: (err) => {
+        console.error("Exception occurred while calling API", err);
+        // ✅ Set to empty arrays on error
+        this.JobResponse = [];
+        this.filteredJobRequests = [];
       },
       complete: () => {
         console.log("Data retrieval completed successfully");
       }
     });
   }
-
 
   getStatusClass(status: string): string {
     switch (status) {
@@ -119,7 +124,7 @@ export class HrJobRequests implements OnInit {
     }
   }
 
-  applyFilter(filter: string) {
+  applyFilter(filter: string): void {
     this.selectedFilter = filter;
 
     switch (filter) {
@@ -135,21 +140,15 @@ export class HrJobRequests implements OnInit {
     }
   }
 
-
-
-
-  // postJob(jobRequestId: number) {
-  //   this.hrService.postJob(jobRequestId).subscribe({
-  //     next: (data) => {
-  //       console.log(data);
-  //       alert(data);
-  //     },
-  //     error: (err) => {
-  //       console.error("Exception occurred while calling API", err);
-  //     },
-  //     complete: () => {
-  //       console.log("Data retrieval completed successfully");
-  //     }
-  //   });
-  // }
+  postJob(jobRequestId: number) {
+    this.hrService.postJob(jobRequestId).subscribe({
+      next: (data) => {
+        console.log(data);
+        alert(data);
+      },
+      error: (err) => {
+        console.error("Exception occurred while calling API", err);
+      }
+    });
+  }
 }

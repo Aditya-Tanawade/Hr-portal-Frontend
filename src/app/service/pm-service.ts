@@ -122,7 +122,7 @@ export class PmService {
   return this.httpClient.patch(
     this.baseurl + "decline/job-request/" + jobRequestId,
     {}, // required body
-    { responseType: 'text' } // ✅ plain text response
+    { responseType: 'text' } 
   );
 }
 

@@ -12,14 +12,12 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
 />
-
-
 </head>
 <body>
 <div class="pm-job-requests-container">
     <!-- Header Section -->
     <section class="header-section">
-        <h1>HR  Job Requests</h1>
+        <h1>HR Job Requests</h1>
         <p>Manage all your allocated job requests efficiently</p>
     </section>
 
@@ -33,7 +31,6 @@
             <div class="stat-number">{{countOfPendingJobRequests}}</div>
             <div class="stat-label">Pending</div>
         </div>
-
         <div class="stat-item">
             <div class="stat-number">{{countOfPostedJobs}}</div>
             <div class="stat-label">Posted On Job Portal</div>
@@ -41,7 +38,7 @@
     </section>
 
     <!-- Filter Buttons -->
-         <section class="filter-buttons">
+    <section class="filter-buttons">
         <button
           class="filter-btn"
           [class.active]="selectedFilter === 'all'"
@@ -68,106 +65,59 @@
     </section>
 
     <!-- Job Requests Cards -->
-     <section class="cards-grid" id="jobRequestsGrid">
-        @for (item of filteredJobRequests; track item.jobRequestId ) {
-        <div class="card" data-status="incoming">
-          <div class="card-header">
-            <div>
-              <div class="card-title">{{ item.title }}</div>
-              <div class="card-subtitle">{{ item.jobRequestId }}</div>
-            </div>
-            <span class="status-badge" [ngClass]="getStatusClass(item.status)">
-              {{ getStatusLabel(item.status) }}</span
-            >
-          </div>
-          <div class="card-content">
-            <div class="info-row">
-              <span class="info-label">Description:</span>
-              <span class="info-value">{{ item.description }}</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Skills:</span>
-              <span class="info-value">{{ item.skills }}</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Experience:</span>
-              <span class="info-value"
-                >{{ item.minExperience }} - {{ item.maxExperience }} years</span
-              >
-            </div>
-            <div class="info-row">
-              <span class="info-label">CTC:</span>
-              <span class="info-value">{{ item.minCtc }} - {{ item.maxCtc }} Lp</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Priority:</span>
-              <span class="info-value" [ngClass]="getPriorityClass(item.priority)">
-                {{ item.priority }}
-              </span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Job Type:</span>
-              <span class="info-value">{{ item.jobType }}</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Headcount:</span>
-              <span class="info-value">{{ item.headCount }}</span>
-            </div>
-          </div>
-          <div class="card-actions" >
-            <button class="btn btn-success btn-sm">
-                            <i class="fas fa-upload"></i> Post Job
-                        </button>
-          </div>
-        </div>
-        }
-      </section>
-
-        <!-- <div class="card" data-status="assigned">
-            <div class="card-header">
+    <!-- ✅ FIXED: @for should be INSIDE the cards-grid section -->
+    <section class="cards-grid" id="jobRequestsGrid">
+        @for (item of filteredJobRequests; track item.jobRequestId) {
+            <div class="card" data-status="incoming">
+              <div class="card-header">
                 <div>
-                    <div class="card-title">Backend Engineer</div>
-                    <div class="card-subtitle">JR102 • Project Beta</div>
+                  <div class="card-title">{{ item.title }}</div>
+                  <div class="card-subtitle">{{ item.jobRequestId }}</div>
                 </div>
-                <span class="status-badge status-assigned">Assigned To Bench</span>
+                <span class="status-badge" [ngClass]="getStatusClass(item.status)">
+                  {{ getStatusLabel(item.status) }}
+                </span>
+              </div>
+              <div class="card-content">
+                <div class="info-row">
+                  <span class="info-label">Description:</span>
+                  <span class="info-value">{{ item.description }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Skills:</span>
+                  <span class="info-value">{{ item.skills }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Experience:</span>
+                  <span class="info-value">{{ item.minExperience }} - {{ item.maxExperience }} years</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">CTC:</span>
+                  <span class="info-value">{{ item.minCtc }} - {{ item.maxCtc }} Lp</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Priority:</span>
+                  <span class="info-value" [ngClass]="getPriorityClass(item.priority)">
+                    {{ item.priority }}
+                  </span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Job Type:</span>
+                  <span class="info-value">{{ item.jobType }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Headcount:</span>
+                  <span class="info-value">{{ item.headCount }}</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <button class="btn btn-success btn-sm"  *ngIf="item.status === 'FORWARDED_TO_HR'" (click)="postJob(item.jobRequestId)">
+                  <i class="fas fa-upload"></i> Post Job
+                </button>
+              </div>
             </div>
-            <div class="card-content">
-                <div class="info-row">
-                    <span class="info-label">Title:</span>
-                    <span class="info-value">Backend Engineer</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Skills:</span>
-                    <span class="info-value">Java, Spring Boot, MySQL</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Experience:</span>
-                    <span class="info-value">5+ years</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Min CTC:</span>
-                    <span class="info-value">$70,000</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Max CTC:</span>
-                    <span class="info-value">$90,000</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Headcount:</span>
-                    <span class="info-value">1</span>
-                </div>
-            </div>
-            <div class="card-actions">
-                <button class="btn btn-success btn-sm" onclick="postJobFromRequest('JR001')">
-                            <i class="fas fa-upload"></i> Post Job
-                        </button>
-
-                        <button class="btn btn-outline btn-sm">
-                            <i class="fas fa-eye"></i> Details
-                        </button>
-            </div>
-        </div> -->
-
-        
+        }
+    </section>
 </div>
-
+</body>
+</html>

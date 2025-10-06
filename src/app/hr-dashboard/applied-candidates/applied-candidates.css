@@ -304,3 +304,23 @@ body {
 .card-actions .btn-danger:hover {
     background-color: #c0392b;
 }
+
+
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.no-results p {
+    font-size: 18px;
+    color: #7f8c8d;
+    margin: 0;
+}
+
+.form-group {
+    margin-top: 20px;
+    text-align: right;
+}
