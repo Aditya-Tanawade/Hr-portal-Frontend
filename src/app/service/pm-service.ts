@@ -71,6 +71,10 @@ export class PmService {
   }
 
     getCountOfClosedJobRequests(loginPmId:string):Observable<number>{
+    return this.httpClient.get<number>(this.baseurl+"count/job-request/closed/"+loginPmId);
+  }
+
+    getCountOfDeclinedJobRequests(loginPmId:string):Observable<number>{
     return this.httpClient.get<number>(this.baseurl+"count/job-request/declined/"+loginPmId);
   }
 

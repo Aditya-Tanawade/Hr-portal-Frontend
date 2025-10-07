@@ -1,0 +1,493 @@
+<div class="applications-container">
+  <!-- Header Section -->
+  <section class="applications-header">
+    <div class="header-content">
+      <h1 class="page-title">Manage Interviews</h1>
+      <p class="page-subtitle">Manage Interviews Of ShortListed Candidates</p>
+      <div class="applications-stats">
+        <div class="stat-item stats-total">
+          <div class="stat-number">{{ countTotalShortlisted }}</div>
+          <div class="stat-label">Total ShortListed</div>
+        </div>
+        <div class="stat-item stats-pending">
+          <div class="stat-number">{{ countAssiignedInterviews }}</div>
+          <div class="stat-label">Assigned Interview</div>
+        </div>
+        <div class="stat-item stats-approved">
+          <div class="stat-number">{{ countSelectedCandidates }}</div>
+          <div class="stat-label">Selected</div>
+        </div>
+        <div class="stat-item stats-declined">
+          <div class="stat-number">{{ countRejectedCandidates }}</div>
+          <div class="stat-label">Rejected</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Buttons -->
+  <section class="filter-buttons">
+    <button class="filter-btn" [class.active]="selectedFilter === 'all'" (click)="applyFilter('all')">
+      All
+    </button>
+    <button class="filter-btn" [class.active]="selectedFilter === 'assigned'" (click)="applyFilter('assigned')">
+      Assigned Interviews
+    </button>
+    <button class="filter-btn" [class.active]="selectedFilter === 'selected'" (click)="applyFilter('selected')">
+      Selected
+    </button>
+    <button class="filter-btn" [class.active]="selectedFilter === 'rejected'" (click)="applyFilter('rejected')">
+      Rejected
+    </button>
+  </section>
+
+  <!-- Candidate Cards Grid -->
+  <div class="cards-grid" *ngIf="filterShortlistedCandidates.length > 0">
+    
+    <div class="candidate-card" *ngFor="let candidate of filterShortlistedCandidates" [ngClass]="{'card-rejected': isRejected(candidate.interviewStatus)}">
+      
+      <!-- Card for PENDING status -->
+      <ng-container *ngIf="isPending(candidate.interviewStatus)">
+        <div class="candidate-profile">
+          <div class="candidate-avatar">{{ getInitials(candidate.fullName) }}</div>
+          <div class="candidate-info">
+            <h4>{{ candidate.fullName }}</h4>
+            <p>{{ candidate.profileRole || 'Not Specified' }} • {{ candidate.totalExperience }} years experience</p>
+            <div class="skills-tags">
+              <span class="skill-tag" *ngFor="let skill of getSkillsArray(candidate.skills)">
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+          <span class="status-badge status-badge-pending">{{ getStatusLabel(candidate.interviewStatus) }}</span>
+        </div>
+        <div class="card-content">
+          <div class="info-row">
+            <span class="info-label">Applied For:</span>
+            <span class="info-value">{{ candidate.title || 'N/A' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Applied Date:</span>
+            <span class="info-value">{{ formatDate(candidate.appliedAt) }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Email:</span>
+            <span class="info-value">{{ candidate.email }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Expected Salary:</span>
+            <span class="info-value">₹{{ candidate.expectedCtc }} LPA</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Notice Period:</span>
+            <span class="info-value">{{ candidate.noticePeriod }} days</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-success btn-sm" (click)="scheduleInterview(candidate)">
+            <i class="fas fa-calendar"></i> Schedule Interview
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- Card for INTERVIEW1_CLEARED status -->
+      <ng-container *ngIf="isInterview1Cleared(candidate.interviewStatus)">
+        <div class="candidate-profile">
+          <div class="candidate-avatar">{{ getInitials(candidate.fullName) }}</div>
+          <div class="candidate-info">
+            <h4>{{ candidate.fullName }}</h4>
+            <p>{{ candidate.profileRole || 'Not Specified' }} • {{ candidate.totalExperience }} years experience</p>
+            <div class="skills-tags">
+              <span class="skill-tag" *ngFor="let skill of getSkillsArray(candidate.skills)">
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+          <span class="status-badge status-badge-cleared">{{ getStatusLabel(candidate.interviewStatus) }}</span>
+        </div>
+        <div class="card-content">
+          <div class="info-row">
+            <span class="info-label">Position:</span>
+            <span class="info-value">{{ candidate.title || 'N/A' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Round 1 Score:</span>
+            <span class="info-value score-highlight">{{ candidate.score }}/10</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Round 1 Remarks:</span>
+            <span class="info-value">{{ candidate.remarks || 'No remarks provided' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Email:</span>
+            <span class="info-value">{{ candidate.email }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Expected CTC:</span>
+            <span class="info-value">₹{{ candidate.expectedCtc }} LPA</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Next Step:</span>
+            <span class="info-value">Schedule Round 2 Interview</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary btn-sm" (click)="scheduleRound2(candidate)">
+            <i class="fas fa-calendar-check"></i> Schedule Round 2
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- Card for INTERVIEW2_CLEARED status -->
+      <ng-container *ngIf="isInterview2Cleared(candidate.interviewStatus)">
+        <div class="candidate-profile">
+          <div class="candidate-avatar">{{ getInitials(candidate.fullName) }}</div>
+          <div class="candidate-info">
+            <h4>{{ candidate.fullName }}</h4>
+            <p>{{ candidate.profileRole || 'Not Specified' }} • {{ candidate.totalExperience }} years experience</p>
+            <div class="skills-tags">
+              <span class="skill-tag" *ngFor="let skill of getSkillsArray(candidate.skills)">
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+          <span class="status-badge status-badge-cleared">{{ getStatusLabel(candidate.interviewStatus) }}</span>
+        </div>
+        <div class="card-content">
+          <div class="info-row">
+            <span class="info-label">Position:</span>
+            <span class="info-value">{{ candidate.title || 'N/A' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Round 2 Score:</span>
+            <span class="info-value score-highlight">{{ candidate.score }}/10</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Round 2 Remarks:</span>
+            <span class="info-value">{{ candidate.remarks || 'No remarks provided' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Email:</span>
+            <span class="info-value">{{ candidate.email }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Overall Performance:</span>
+            <span class="info-value">Strong candidate for HR discussion</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Next Step:</span>
+            <span class="info-value">Schedule HR Round</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary btn-sm" (click)="scheduleHRRound(candidate)">
+            <i class="fas fa-user-tie"></i> Schedule HR Round
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- Card for HR_CLEARED status -->
+      <ng-container *ngIf="isHRCleared(candidate.interviewStatus)">
+        <div class="candidate-profile">
+          <div class="candidate-avatar selected-avatar">{{ getInitials(candidate.fullName) }}</div>
+          <div class="candidate-info">
+            <h4>{{ candidate.fullName }}</h4>
+            <p>{{ candidate.profileRole || 'Not Specified' }} • {{ candidate.totalExperience }} years experience</p>
+            <div class="skills-tags">
+              <span class="skill-tag" *ngFor="let skill of getSkillsArray(candidate.skills)">
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+          <span class="status-badge status-badge-selected">{{ getStatusLabel(candidate.interviewStatus) }}</span>
+        </div>
+        <div class="card-content card-content-selected">
+          <div class="info-row">
+            <span class="info-label">Position:</span>
+            <span class="info-value">{{ candidate.title || 'N/A' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Final HR Score:</span>
+            <span class="info-value score-highlight-final">{{ candidate.score }}/10</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">HR Remarks:</span>
+            <span class="info-value">{{ candidate.remarks || 'Excellent candidate' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Email:</span>
+            <span class="info-value">{{ candidate.email }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Expected CTC:</span>
+            <span class="info-value">₹{{ candidate.expectedCtc }} LPA</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Notice Period:</span>
+            <span class="info-value">{{ candidate.noticePeriod }} days</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Next Step:</span>
+            <span class="info-value">Salary Negotiation</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-success btn-sm" (click)="discussSalary(candidate)">
+            <i class="fas fa-dollar-sign"></i> Discuss Salary
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- Card for REJECTED statuses -->
+      <ng-container *ngIf="isRejected(candidate.interviewStatus)">
+        <div class="candidate-profile">
+          <div class="candidate-avatar rejected-avatar">{{ getInitials(candidate.fullName) }}</div>
+          <div class="candidate-info">
+            <h4>{{ candidate.fullName }}</h4>
+            <p>{{ candidate.profileRole || 'Not Specified' }} • {{ candidate.totalExperience }} years experience</p>
+            <div class="skills-tags">
+              <span class="skill-tag" *ngFor="let skill of getSkillsArray(candidate.skills)">
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+          <span class="status-badge status-badge-rejected">{{ getStatusLabel(candidate.interviewStatus) }}</span>
+        </div>
+        <div class="card-content">
+          <div class="info-row">
+            <span class="info-label">Position:</span>
+            <span class="info-value">{{ candidate.title || 'N/A' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Score:</span>
+            <span class="info-value">{{ candidate.score }}/10</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Rejection Reason:</span>
+            <span class="info-value">{{ candidate.remarks || 'Did not meet requirements' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Email:</span>
+            <span class="info-value">{{ candidate.email }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Date:</span>
+            <span class="info-value">{{ formatDate(candidate.appliedAt) }}</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-outline btn-sm" (click)="downloadResume(candidate)" *ngIf="candidate.resumePath">
+            <i class="fas fa-download"></i> Resume
+          </button>
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+
+  <!-- No Results Message -->
+  <div *ngIf="filterShortlistedCandidates.length === 0" class="no-results">
+    <i class="fas fa-inbox fa-3x"></i>
+    <p>No candidates found matching your criteria.</p>
+  </div>
+</div>
+
+<!-- Schedule Interview Modal -->
+<div class="modal-overlay" *ngIf="showScheduleModal" (click)="closeScheduleModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2 class="modal-title">
+        <i class="fas fa-calendar-alt"></i>
+        Schedule {{ interviewRound }}
+      </h2>
+      <button class="modal-close" (click)="closeScheduleModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Candidate Info Banner -->
+      <div class="candidate-info-banner" *ngIf="selectedCandidate">
+        <div class="banner-avatar">{{ getInitials(selectedCandidate.fullName) }}</div>
+        <div class="banner-details">
+          <h3>{{ selectedCandidate.fullName }}</h3>
+          <p>{{ selectedCandidate.title }} • {{ selectedCandidate.totalExperience }} years exp</p>
+        </div>
+      </div>
+
+      <!-- Form Section -->
+      <form class="interview-form" *ngIf="!showMeetingLink">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-user"></i> Candidate Email
+            </label>
+            <input 
+              type="email" 
+              class="form-input" 
+              [(ngModel)]="interviewForm.candidateEmail"
+              name="candidateEmail"
+              readonly
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-user-tie"></i> Interviewer Email
+            </label>
+            <input 
+              type="email" 
+              class="form-input" 
+              [(ngModel)]="interviewForm.employeeEmail"
+              name="employeeEmail"
+              placeholder="interviewer@company.com"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-calendar"></i> Interview Date
+            </label>
+            <input 
+              type="date" 
+              class="form-input" 
+              [(ngModel)]="interviewForm.interviewDate"
+              name="interviewDate"
+              [min]="getTomorrowDate()"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-clock"></i> Start Time
+            </label>
+            <input 
+              type="time" 
+              class="form-input" 
+              [(ngModel)]="interviewForm.startTime"
+              name="startTime"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-clock"></i> End Time
+            </label>
+            <input 
+              type="time" 
+              class="form-input" 
+              [(ngModel)]="interviewForm.endTime"
+              name="endTime"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-heading"></i> Summary
+          </label>
+          <input 
+            type="text" 
+            class="form-input" 
+            [(ngModel)]="interviewForm.summary"
+            name="summary"
+            placeholder="e.g., Technical Interview - Backend Developer"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-align-left"></i> Description
+          </label>
+          <textarea 
+            class="form-textarea" 
+            [(ngModel)]="interviewForm.description"
+            name="description"
+            rows="4"
+            placeholder="Enter interview description and topics to be discussed..."
+            required
+          ></textarea>
+        </div>
+
+        <div class="error-message" *ngIf="scheduleError">
+          <i class="fas fa-exclamation-circle"></i>
+          {{ scheduleError }}
+        </div>
+      </form>
+
+      <!-- Meeting Link Display -->
+      <div class="meeting-link-container" *ngIf="showMeetingLink">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h3 class="success-title">Interview Scheduled Successfully!</h3>
+        <p class="success-message">The Zoom meeting has been created. Share this link with the candidate.</p>
+        
+        <div class="meeting-link-box">
+          <label class="meeting-link-label">
+            <i class="fas fa-video"></i> Zoom Meeting Link
+          </label>
+          <div class="meeting-link-display">
+            <input 
+              type="text" 
+              class="meeting-link-input" 
+              [value]="zoomMeetingLink" 
+              readonly
+            />
+            <button 
+              class="copy-btn" 
+              (click)="copyToClipboard(zoomMeetingLink)"
+              title="Copy to clipboard"
+            >
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="meeting-details">
+          <div class="detail-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>{{ interviewForm.interviewDate | date: 'fullDate' }}</span>
+          </div>
+          <div class="detail-item">
+            <i class="fas fa-clock"></i>
+            <span>{{ interviewForm.startTime }} - {{ interviewForm.endTime }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button 
+        class="btn btn-secondary" 
+        (click)="closeScheduleModal()"
+      >
+        <i class="fas fa-times"></i> Cancel
+      </button>
+
+      <button 
+        class="btn btn-success" 
+        (click)="submitScheduleInterview()"
+        *ngIf="!showMeetingLink"
+      >
+        <i class="fas fa-calendar-check"></i>
+        Schedule Interview
+      </button>
+
+      <button 
+        class="btn btn-primary" 
+        (click)="notifyCandidate()"
+        *ngIf="showMeetingLink"
+      >
+        <i class="fas fa-paper-plane"></i> Save & Notify Candidate
+      </button>
+    </div>
+  </div>
+</div>

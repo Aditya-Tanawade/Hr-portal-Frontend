@@ -18,12 +18,14 @@ export class PmJobRequests implements OnInit {
   countOfPendingJobRequests: number = 0;
   countOfApprovedJobRequests: number = 0;
   CountOfClosedJobRequests: number = 0;
+    countOfDeclinedJobRequests: number = 0;
+
   pmJobResponse: PmJobRequestResponseDTO[] = []; 
   filteredJobRequests: PmJobRequestResponseDTO[] = []; 
 
 
   selectedFilter: string = 'all';
-  hrForwardDTO: HrForwardDTO = new HrForwardDTO(); // Initialize empty DTO
+  hrForwardDTO: HrForwardDTO = new HrForwardDTO(); 
   showHrForm: boolean = false;
   selectedJobRequestId: number | null = null;
 
@@ -39,8 +41,9 @@ export class PmJobRequests implements OnInit {
     this.getCountOfPendingRequest(this.loginPmId);
     this.getCountOfClosedJobRequests(this.loginPmId);
     this.getCountOfApprovedJobRequests(this.loginPmId);
+  this.getCountOfDeclinedJobRequests(this.loginPmId);
     this.getAllJobrequestsByPmId(this.loginPmId);
-    this.applyFilter('all'); // Default to all
+    this.applyFilter('all');
     this.fetchHrIds();
   }
 
@@ -94,6 +97,22 @@ export class PmJobRequests implements OnInit {
       next: (data: number) => {
         console.log('Count OF Assigned to Bench From API', data);
         this.CountOfClosedJobRequests = data;
+      },
+      error: (err) => {
+        console.error("Exception occurred while calling API", err);
+      },
+      complete: () => {
+        console.log("Data retrieval completed successfully");
+      }
+    });
+  }
+
+
+  getCountOfDeclinedJobRequests(loginPmId: string) {
+    this.pmService.getCountOfDeclinedJobRequests(loginPmId).subscribe({
+      next: (data: number) => {
+        console.log('Count OF Assigned to Bench From API', data);
+        this.countOfDeclinedJobRequests = data;
       },
       error: (err) => {
         console.error("Exception occurred while calling API", err);
@@ -195,7 +214,7 @@ export class PmJobRequests implements OnInit {
     this.pmService.findHrIDs().subscribe({
       next: (ids: string[]) => {
         this.hrIds = ids;
-        console.log('Team Lead IDs fetched:', ids);
+        console.log('Hr IDs fetched:', ids);
       },
       error: (error) => {
         console.error('Error fetching team lead IDs:', error);

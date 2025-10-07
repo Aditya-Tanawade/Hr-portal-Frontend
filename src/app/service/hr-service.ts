@@ -90,7 +90,7 @@ export class HrService {
      
 
    getAllShortlistedCandidates(loginHrId: string): Observable<ShortlistedCandidatesDTO[]> {
-      return this.httpClient.get<ShortlistedCandidatesDTO[]>(this.baseurl+"/getshortlisted/"+loginHrId);
+      return this.httpClient.get<ShortlistedCandidatesDTO[]>(this.baseurl+"getshortlisted/"+loginHrId);
     }
 
 
